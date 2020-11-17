@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  database:
+    image: mongo
+    container_name: shoplr_mongodb
+    restart: always
+    volumes:
+     -  /srv/docker/shoplr/mongo/db:/data/db
+    ports:
+     - "27017-27019:27017-27019"
+
+  app:
+    container_name: shoplr_app
+    image: shoplr_app
+    restart: always
+    build: ./shoplr
+    links:
+     - database
+    ports:
+     - "80:80"
