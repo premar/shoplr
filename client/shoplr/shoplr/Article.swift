@@ -13,5 +13,6 @@ struct Article: Identifiable {
     let specification: String
     let icon: String
     let expiryDate: Date
+    let bought: Bool
     
 }

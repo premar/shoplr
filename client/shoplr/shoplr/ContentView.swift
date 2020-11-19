@@ -8,22 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    @StateObject var listLoader = ListLoader()
+    //to fix dismiss modal issue
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var shoppingListStore: ShoppingListStore
+    //@StateObject var listLoader = ShoppingListStore()
     @State private var show_modal: Bool = false
     @State private var editMode = EditMode.inactive
+    
     var body: some View {
         NavigationView {
-            if let shoppingLists = listLoader.shoppingLists{
+            if let shoppingLists = shoppingListStore.shoppingLists{
                 List{
                     ForEach(shoppingLists){list in
                         
-                        NavigationLink(destination: ShoppingListView(shoppinglist: list)){
+                        NavigationLink(destination: ShoppingListView(shoppingList: list)){
                             
                             Label(
                                 title: { Text(list.name) },
-                                icon: { Image(systemName: list.icon) }
+                                icon: { Text(list.icon) }
                             )
+                            
                         }
                     }.onDelete(perform: onDelete)
                     .onMove(perform: onMove)
@@ -33,10 +37,10 @@ struct ContentView: View {
                 .navigationBarTitle("Einkaufslisten")
                 .navigationBarItems(leading: EditButton(),trailing:
                                         Button(action: {
-                                            self.show_modal = true
+                                            self.show_modal.toggle()
                                         }) {
                                             Image(systemName: "plus")
-                                        }.sheet(isPresented: self.$show_modal) {
+                                        }.sheet(isPresented: self.$show_modal, onDismiss: {print("dismissed")}) {
                                             CreateListModalView()
                                         }
                 )
@@ -46,18 +50,12 @@ struct ContentView: View {
         }
     }
     private func onDelete(offsets: IndexSet) {
-        //Implement Logic to delete List
-        if var list = listLoader.shoppingLists{
-            list.remove(atOffsets: offsets)
-            listLoader.shoppingLists=list
-        }
+        shoppingListStore.removeList(index: offsets)
     }
     
     private func onMove(source: IndexSet, destination: Int) {
-        if var list = listLoader.shoppingLists{
-            list.move(fromOffsets: source, toOffset: destination)
-            listLoader.shoppingLists=list
-        }
+        shoppingListStore.shoppingLists!.move(fromOffsets: source, toOffset: destination)
+        
     }
 }
 

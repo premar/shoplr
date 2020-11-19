@@ -12,7 +12,7 @@
 		A780DC6A2562F95400107631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A780DC692562F95400107631 /* Assets.xcassets */; };
 		A780DC6D2562F95400107631 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A780DC6C2562F95400107631 /* Preview Assets.xcassets */; };
 		A780DC7525630CD600107631 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7425630CD500107631 /* ShoppingList.swift */; };
-		A780DC7725630E3F00107631 /* ListLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7625630E3F00107631 /* ListLoader.swift */; };
+		A780DC7725630E3F00107631 /* ShoppingListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7625630E3F00107631 /* ShoppingListStore.swift */; };
 		A780DC792563177400107631 /* CreateListModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC782563177400107631 /* CreateListModalView.swift */; };
 		A780DC7B256319D400107631 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7A256319D400107631 /* ShoppingListView.swift */; };
 		A780DC7D25631CF300107631 /* AddArticleModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7C25631CF300107631 /* AddArticleModalView.swift */; };
@@ -27,7 +27,7 @@
 		A780DC6C2562F95400107631 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A780DC6E2562F95400107631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A780DC7425630CD500107631 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
-		A780DC7625630E3F00107631 /* ListLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLoader.swift; sourceTree = "<group>"; };
+		A780DC7625630E3F00107631 /* ShoppingListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListStore.swift; sourceTree = "<group>"; };
 		A780DC782563177400107631 /* CreateListModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListModalView.swift; sourceTree = "<group>"; };
 		A780DC7A256319D400107631 /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
 		A780DC7C25631CF300107631 /* AddArticleModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArticleModalView.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 				A780DC692562F95400107631 /* Assets.xcassets */,
 				A780DC6E2562F95400107631 /* Info.plist */,
 				A780DC672562F95000107631 /* ContentView.swift */,
-				A780DC7625630E3F00107631 /* ListLoader.swift */,
+				A780DC7625630E3F00107631 /* ShoppingListStore.swift */,
 				A780DC782563177400107631 /* CreateListModalView.swift */,
 				A780DC7C25631CF300107631 /* AddArticleModalView.swift */,
 				A780DC7A256319D400107631 /* ShoppingListView.swift */,
@@ -161,7 +161,7 @@
 				A780DC792563177400107631 /* CreateListModalView.swift in Sources */,
 				A780DC7525630CD600107631 /* ShoppingList.swift in Sources */,
 				A780DC7F2563C77700107631 /* Article.swift in Sources */,
-				A780DC7725630E3F00107631 /* ListLoader.swift in Sources */,
+				A780DC7725630E3F00107631 /* ShoppingListStore.swift in Sources */,
 				A780DC7D25631CF300107631 /* AddArticleModalView.swift in Sources */,
 				A780DC662562F95000107631 /* shoplrApp.swift in Sources */,
 			);
