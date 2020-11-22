@@ -29,8 +29,9 @@ class ShoppingListStore: ObservableObject {
         
     }
     public func removeList(index: IndexSet){
-       
             shoppingLists!.remove(atOffsets: index)
+    }
+    public func addArticleToShoppingList(article: Article, shoppingList: ShoppingList){
         
     }
 }
