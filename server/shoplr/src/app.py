@@ -2,27 +2,27 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 import json
 
-app = Flask(__name__, instance_relative_config=True)
-app.config.from_pyfile('config.py')
+application = Flask(__name__, instance_relative_config=True)
+application.config.from_pyfile('config.py')
 
 
-@app.route('/')
+@application.route('/')
 def default_route():
     return 'backend of shoplr'
 
 
-@app.route('/v1/list/', methods=['POST'])
+@application.route('/v1/list/', methods=['POST'])
 def new_list():
     if request.method == 'POST':
         _json = request.json
         shoplr_list = json.loads(_json)
-        if shoplr_list['key'] == app.config['API_KEY']:
+        if shoplr_list['key'] == application.config['API_KEY']:
 
             data = {'identifier': 'meta', 'name': shoplr_list['name'], 'icon': shoplr_list['icon']}
             json_data = json.dumps(data)
 
-            client = MongoClient(app.config["DB_SERVER_URI"])
-            db = client[app.config["DB_NAME"]]
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
             collection = db[shoplr_list["uuid"]]
             collection.insert_one(json_data)
 
@@ -35,12 +35,12 @@ def new_list():
             return 401
 
 
-@app.route('/v1/article/<string:list_uuid>', methods=['POST'])
+@application.route('/v1/article/<string:list_uuid>', methods=['POST'])
 def new_article(list_uuid):
     if request.method == 'POST':
         _json = request.json
         shoplr_article = json.loads(_json)
-        if shoplr_article['key'] == app.config['API_KEY']:
+        if shoplr_article['key'] == application.config['API_KEY']:
             data = {'identifier': 'item',
                     'uuid': shoplr_article['uuid'],
                     'name': shoplr_article['name'],
@@ -49,8 +49,8 @@ def new_article(list_uuid):
                     'expiryDate': shoplr_article['expiryDate']}
             json_data = json.dumps(data)
 
-            client = MongoClient(app.config["DB_SERVER_URI"])
-            db = client[app.config["DB_NAME"]]
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
             collection.insert_one(json_data)
 
@@ -63,14 +63,14 @@ def new_article(list_uuid):
             return resp
 
 
-@app.route('/v1/article/<string:list_uuid>', methods=['GET'])
+@application.route('/v1/article/<string:list_uuid>', methods=['GET'])
 def get_article(list_uuid):
     if request.method == 'GET':
         _json = request.json
         shoplr_validator = json.loads(_json)
-        if shoplr_validator['key'] == app.config['API_KEY']:
-            client = MongoClient(app.config["DB_SERVER_URI"])
-            db = client[app.config["DB_NAME"]]
+        if shoplr_validator['key'] == application.config['API_KEY']:
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
             return list(collection.find({}))
         else:
@@ -79,14 +79,14 @@ def get_article(list_uuid):
             return resp
 
 
-@app.route('/v1/list/<string:list_uuid>', methods=['DELETE'])
+@application.route('/v1/list/<string:list_uuid>', methods=['DELETE'])
 def delete_list(list_uuid):
     if request.method == 'DELETE':
         _json = request.json
         shoplr_validator = json.loads(_json)
-        if shoplr_validator['key'] == app.config['API_KEY']:
-            client = MongoClient(app.config["DB_SERVER_URI"])
-            db = client[app.config["DB_NAME"]]
+        if shoplr_validator['key'] == application.config['API_KEY']:
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
             collection.drop()
             resp = "200 Deleted!"
@@ -98,14 +98,14 @@ def delete_list(list_uuid):
             return resp
 
 
-@app.route('/v1/article/<string:list_uuid>/<string:article_uuid>', methods=['DELETE'])
+@application.route('/v1/article/<string:list_uuid>/<string:article_uuid>', methods=['DELETE'])
 def delete_item(list_uuid, article_uuid):
     if request.method == 'DELETE':
         _json = request.json
         shoplr_validator = json.loads(_json)
-        if shoplr_validator['key'] == app.config['API_KEY']:
-            client = MongoClient(app.config["DB_SERVER_URI"])
-            db = client[app.config["DB_NAME"]]
+        if shoplr_validator['key'] == application.config['API_KEY']:
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
             collection.remove({'uuid': article_uuid})
             resp = "200 Deleted!"
@@ -118,4 +118,4 @@ def delete_item(list_uuid, article_uuid):
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
