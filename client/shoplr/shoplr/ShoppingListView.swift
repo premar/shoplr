@@ -8,79 +8,104 @@
 import SwiftUI
 
 struct ShoppingListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
-
-    @State var shoppingList: ShoppingList
-    @State private var show_modal: Bool = false
-
-    @State private var newArticleName: String = ""
-
+    
+    var shoppingList: ShoppingList
+    @State private var isAddItemModalPresented: Bool = false
+    
+    @State private var newItemName: String = ""
+    
+    var shoppingListIndex: Int?{
+        shoppingListStore.shoppingLists?.firstIndex(where: {$0.id == shoppingList.id})
+    }
+    
+    
     var body: some View {
         VStack(alignment: .leading) {
             List {
-                if let articles = shoppingList.articles {
-                    ForEach(articles) { article in
-                        HStack {
-                            Image(systemName: "circle")
-                            Text(article.name + " (" + article.specification + ")")
-                        }
+                if let items = shoppingListStore.shoppingLists?[shoppingListIndex!].items {
+                    ForEach(items, id: \.self) { item in
+                        itemCellView(item: item)
                     }
-                    addNewTaskElement()
+                    addNewItemElementView()
                 }
             }
-            bottomButton()
+            createBottomButtonsView()
         }.navigationBarTitle(shoppingList.name)
-                .navigationBarItems(trailing:
-                Button(action: {
-                    print("Button Pushed")
-                    self.show_modal = true
-                }) {
-                    Image(systemName: "ellipsis.circle")
-                }.sheet(isPresented: self.$show_modal) {
-                    AddArticleModalView(shoppingList: shoppingList)
-                }
-                )
+        .navigationBarItems(trailing:
+                                Button(action: {
+                                    //share link action here?
+                                }) {
+                                    Image(systemName: "ellipsis.circle")
+                                }
+        )
     }
-    private func addNewTaskElement() -> some View {
+    private func itemCellView(item: Item) -> some View {
         HStack {
-            Image(systemName: "circle.plus")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .onTapGesture {
-                        print("onTapGesture")
-                    }
-            TextField("Artikel eingeben", text: $newArticleName,
-                    onCommit: {
-                        shoppingListStore.addArticleToShoppingList(article: Article(name: newArticleName, specification: "Rober C Martin", icon: "", expiryDate: Date(), bought: false),shoppingList: shoppingList)
-                        newArticleName = ""
-                    })
+            Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
+                if item.bought{
+                    Label(
+                        title: { Text(item.name + " (" + item.specification + ")").strikethrough() },
+                        icon: {Image(systemName: "checkmark.circle")}
+                    )
+                }
+                else{
+                    Label(
+                        title: { Text(item.name + " (" + item.specification + ")") },
+                        icon: {Image(systemName: "circle")}
+                    )
+                }
+            })
+            
         }
     }
-    private func bottomButton() -> some View {
+    private func addNewItemElementView() -> some View {
         HStack {
-            Button(action: { print("print") }) {
+            Image(systemName: "circle.plus")
+                .resizable()
+                .frame(width: 20, height: 20)
+                .onTapGesture {
+                    print("onTapGesture")
+                }
+            TextField("Artikel eingeben", text: $newItemName,
+                      onCommit: {
+                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: Date(), bought: false),shoppingList: shoppingList)
+                        newItemName = ""
+                      })
+        }
+    }
+    private func createBottomButtonsView() -> some View {
+        HStack {
+            Button(action: { shoppingListStore.cleanUpBoughtItems(shoppingList: self.shoppingList) }) {
                 Label(
-                        title: { Text("Clean Up").fontWeight(.bold) },
-                        icon: { Image(systemName: "trash") }
+                    title: { Text("Clean Up").fontWeight(.bold) },
+                    icon: { Image(systemName: "trash") }
                 )
             }.frame(maxWidth: .infinity)
             .frame(height: 50)
             .background(Color.red)
             .cornerRadius(40)
-
-            Button(action: { print("print")}) {
+            
+            Button(action: {self.isAddItemModalPresented=true}) {
                 Label(
-                        title: { Text("New Task").fontWeight(.bold) },
-                        icon: { Image(systemName: "plus.circle.fill") }
+                    title: { Text("Neuer Artikel").fontWeight(.bold) },
+                    icon: { Image(systemName: "plus.circle.fill") }
                 )
-
-            }.frame(height: 50)
-             .frame(maxWidth: .infinity)
-             .background(Color.blue)
-             .cornerRadius(40)
+                
+            }
+            .sheet(isPresented: self.$isAddItemModalPresented) {
+                //TODO modal doesn't appear properly 
+                AddItemModalView(shoppingList: shoppingList)
+            }
+            .frame(height: 50)
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .cornerRadius(40)
+            
         }
-         .foregroundColor(Color.white)
-         .padding()
+        .foregroundColor(Color.white)
+        .padding()
     }
 }
 

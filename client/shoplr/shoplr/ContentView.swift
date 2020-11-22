@@ -11,8 +11,8 @@ struct ContentView: View {
     //to fix dismiss modal issue
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
-    //@StateObject var listLoader = ShoppingListStore()
-    @State private var show_modal: Bool = false
+    
+    @State private var isCreateModalPresented: Bool = false
     @State private var editMode = EditMode.inactive
     
     var body: some View {
@@ -37,10 +37,10 @@ struct ContentView: View {
                 .navigationBarTitle("Einkaufslisten")
                 .navigationBarItems(leading: EditButton(),trailing:
                                         Button(action: {
-                                            self.show_modal.toggle()
+                                            self.isCreateModalPresented.toggle()
                                         }) {
                                             Image(systemName: "plus")
-                                        }.sheet(isPresented: self.$show_modal, onDismiss: {print("dismissed")}) {
+                                        }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {print("dismissed")}) {
                                             CreateListModalView()
                                         }
                 )
@@ -53,6 +53,7 @@ struct ContentView: View {
         shoppingListStore.removeList(index: offsets)
     }
     
+    //TODO how to handle with server side communication
     private func onMove(source: IndexSet, destination: Int) {
         shoppingListStore.shoppingLists!.move(fromOffsets: source, toOffset: destination)
         

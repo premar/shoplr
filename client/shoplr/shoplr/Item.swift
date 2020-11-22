@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Article: Identifiable {
+struct Item: Identifiable, Hashable {
     var id = UUID()
     let name: String
     let specification: String
+    //TODO do we also want icon on article?
     let icon: String
     let expiryDate: Date
-    let bought: Bool
+    var bought: Bool
     
 }

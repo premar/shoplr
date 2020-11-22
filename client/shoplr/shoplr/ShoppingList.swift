@@ -8,7 +8,7 @@
 import Foundation
 
 struct ShoppingList: Identifiable,Equatable {
-    //TODO
+    //TODO 
     static func == (lhs: ShoppingList, rhs: ShoppingList) -> Bool {
         lhs.name==rhs.name && lhs.id == rhs.id
     }
@@ -16,6 +16,6 @@ struct ShoppingList: Identifiable,Equatable {
     var id = UUID()
     let name: String
     let icon: String
-    var articles: [Article]?
+    var items: [Item]?
     
 }
