@@ -26,7 +26,12 @@ struct ContentView: View {
                             Label(
                                 title: { Text(list.name) },
                                 icon: { Text(list.icon) }
-                            )
+                            ).contextMenu {
+                                Button(action: {print("Share")}) {
+                                    Text("Teilen")
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+                            }
                             
                         }
                     }.onDelete(perform: onDelete)

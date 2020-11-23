@@ -32,14 +32,29 @@ struct ShoppingListView: View {
                 }
             }
             createBottomButtonsView()
-        }.navigationBarTitle(shoppingList.name)
-        .navigationBarItems(trailing:
-                                Button(action: {
-                                    //share link action here?
-                                }) {
-                                    Image(systemName: "ellipsis.circle")
-                                }
-        )
+        }.navigationBarTitle(shoppingList.name).toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Button(action: {}) {
+                        Label("Teilen", systemImage: "link")
+                    }
+                    
+                    Button(action: {}) {
+                        Label("Löschen", systemImage: "trash")
+                    }
+                }
+                label: {
+                    Label("More", systemImage: "ellipsis")
+                }
+            }
+        }
+//        .navigationBarItems(trailing:
+//                                Button(action: {
+//                                    //share link action here?
+//                                }) {
+//                                    Image(systemName: "ellipsis.circle")
+//                                }
+//        )
     }
     private func itemCellView(item: Item) -> some View {
         HStack {
@@ -95,7 +110,7 @@ struct ShoppingListView: View {
                 
             }
             .sheet(isPresented: self.$isAddItemModalPresented) {
-                //TODO modal doesn't appear properly 
+                //TODO modal doesn't appear properly
                 AddItemModalView(shoppingList: shoppingList)
             }
             .frame(height: 50)
