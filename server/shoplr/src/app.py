@@ -35,17 +35,17 @@ def new_list():
             return 401
 
 
-@application.route('/v1/article/<string:list_uuid>', methods=['POST'])
-def new_article(list_uuid):
+@application.route('/v1/item/<string:list_uuid>', methods=['POST'])
+def new_item(list_uuid):
     if request.method == 'POST':
-        shoplr_article = request.json
-        if shoplr_article['key'] == application.config['API_KEY']:
+        shoplr_item = request.json
+        if shoplr_item['key'] == application.config['API_KEY']:
             data = {'identifier': 'item',
-                    'uuid': shoplr_article['uuid'],
-                    'name': shoplr_article['name'],
-                    'specification': shoplr_article['specification'],
-                    'icon': shoplr_article['icon'],
-                    'expiryDate': shoplr_article['expiryDate']}
+                    'uuid': shoplr_item['uuid'],
+                    'name': shoplr_item['name'],
+                    'specification': shoplr_item['specification'],
+                    'icon': shoplr_item['icon'],
+                    'expiryDate': shoplr_item['expiryDate']}
             client = MongoClient(application.config["DB_SERVER_URI"])
             db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
@@ -60,7 +60,7 @@ def new_article(list_uuid):
 
 
 @application.route('/v1/list/<string:list_uuid>/<string:api_key>', methods=['GET'])
-def get_article(list_uuid, api_key):
+def get_item(list_uuid, api_key):
     if request.method == 'GET':
         if api_key == application.config['API_KEY']:
             client = MongoClient(application.config["DB_SERVER_URI"])
@@ -92,14 +92,14 @@ def delete_list(list_uuid, api_key):
             return resp
 
 
-@application.route('/v1/article/<string:list_uuid>/<string:article_uuid>/<string:api_key>', methods=['DELETE'])
-def delete_item(list_uuid, article_uuid, api_key):
+@application.route('/v1/item/<string:list_uuid>/<string:item_uuid>/<string:api_key>', methods=['DELETE'])
+def delete_item(list_uuid, item_uuid, api_key):
     if request.method == 'DELETE':
         if api_key == application.config['API_KEY']:
             client = MongoClient(application.config["DB_SERVER_URI"])
             db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
-            collection.remove({'uuid': article_uuid})
+            collection.remove({'uuid': item_uuid})
             resp = jsonify({'message': '204 Deleted!'})
             resp.status_code = 200
             return resp
