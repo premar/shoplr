@@ -15,8 +15,8 @@
 		A780DC7725630E3F00107631 /* ShoppingListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7625630E3F00107631 /* ShoppingListStore.swift */; };
 		A780DC792563177400107631 /* CreateListModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC782563177400107631 /* CreateListModalView.swift */; };
 		A780DC7B256319D400107631 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7A256319D400107631 /* ShoppingListView.swift */; };
-		A780DC7D25631CF300107631 /* AddArticleModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7C25631CF300107631 /* AddArticleModalView.swift */; };
-		A780DC7F2563C77700107631 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7E2563C77700107631 /* Article.swift */; };
+		A780DC7D25631CF300107631 /* AddItemModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7C25631CF300107631 /* AddItemModalView.swift */; };
+		A780DC7F2563C77700107631 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7E2563C77700107631 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +30,8 @@
 		A780DC7625630E3F00107631 /* ShoppingListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListStore.swift; sourceTree = "<group>"; };
 		A780DC782563177400107631 /* CreateListModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListModalView.swift; sourceTree = "<group>"; };
 		A780DC7A256319D400107631 /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
-		A780DC7C25631CF300107631 /* AddArticleModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArticleModalView.swift; sourceTree = "<group>"; };
-		A780DC7E2563C77700107631 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		A780DC7C25631CF300107631 /* AddItemModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemModalView.swift; sourceTree = "<group>"; };
+		A780DC7E2563C77700107631 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +45,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A74FC5BC256ACF7100146D1F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A74FC5BD256ACF8A00146D1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A780DC592562F95000107631 = {
 			isa = PBXGroup;
 			children = (
@@ -64,16 +78,18 @@
 		A780DC642562F95000107631 /* shoplr */ = {
 			isa = PBXGroup;
 			children = (
+				A74FC5BD256ACF8A00146D1F /* Model */,
+				A74FC5BC256ACF7100146D1F /* Views */,
 				A780DC652562F95000107631 /* shoplrApp.swift */,
+				A780DC7E2563C77700107631 /* Item.swift */,
 				A780DC7425630CD500107631 /* ShoppingList.swift */,
-				A780DC7E2563C77700107631 /* Article.swift */,
-				A780DC692562F95400107631 /* Assets.xcassets */,
-				A780DC6E2562F95400107631 /* Info.plist */,
+				A780DC7A256319D400107631 /* ShoppingListView.swift */,
+				A780DC7C25631CF300107631 /* AddItemModalView.swift */,
+				A780DC782563177400107631 /* CreateListModalView.swift */,
 				A780DC672562F95000107631 /* ContentView.swift */,
 				A780DC7625630E3F00107631 /* ShoppingListStore.swift */,
-				A780DC782563177400107631 /* CreateListModalView.swift */,
-				A780DC7C25631CF300107631 /* AddArticleModalView.swift */,
-				A780DC7A256319D400107631 /* ShoppingListView.swift */,
+				A780DC6E2562F95400107631 /* Info.plist */,
+				A780DC692562F95400107631 /* Assets.xcassets */,
 				A780DC6B2562F95400107631 /* Preview Content */,
 			);
 			path = shoplr;
@@ -160,9 +176,9 @@
 				A780DC682562F95000107631 /* ContentView.swift in Sources */,
 				A780DC792563177400107631 /* CreateListModalView.swift in Sources */,
 				A780DC7525630CD600107631 /* ShoppingList.swift in Sources */,
-				A780DC7F2563C77700107631 /* Article.swift in Sources */,
+				A780DC7F2563C77700107631 /* Item.swift in Sources */,
 				A780DC7725630E3F00107631 /* ShoppingListStore.swift in Sources */,
-				A780DC7D25631CF300107631 /* AddArticleModalView.swift in Sources */,
+				A780DC7D25631CF300107631 /* AddItemModalView.swift in Sources */,
 				A780DC662562F95000107631 /* shoplrApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
