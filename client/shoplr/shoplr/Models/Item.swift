@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Identifiable, Hashable {
+struct Item: Identifiable, Hashable, Codable {
     var id = UUID()
     let name: String
     let specification: String

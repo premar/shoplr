@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ShoppingList: Identifiable,Equatable {
+struct ShoppingList: Identifiable, Equatable, Codable {
     //TODO 
     static func == (lhs: ShoppingList, rhs: ShoppingList) -> Bool {
         lhs.name==rhs.name && lhs.id == rhs.id
