@@ -45,18 +45,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A74FC5BC256ACF7100146D1F /* Views */ = {
+		7F2865F4256C1DB60038ED51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A780DC7425630CD500107631 /* ShoppingList.swift */,
+				A780DC7E2563C77700107631 /* Item.swift */,
 			);
-			path = Views;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		A74FC5BD256ACF8A00146D1F /* Model */ = {
+		7FA36C33256C1EC5009DC73F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A780DC7A256319D400107631 /* ShoppingListView.swift */,
+				A780DC7C25631CF300107631 /* AddItemModalView.swift */,
+				A780DC782563177400107631 /* CreateListModalView.swift */,
+				A780DC672562F95000107631 /* ContentView.swift */,
 			);
-			path = Model;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		A780DC592562F95000107631 = {
@@ -78,15 +84,9 @@
 		A780DC642562F95000107631 /* shoplr */ = {
 			isa = PBXGroup;
 			children = (
-				A74FC5BD256ACF8A00146D1F /* Model */,
-				A74FC5BC256ACF7100146D1F /* Views */,
+				7FA36C33256C1EC5009DC73F /* Views */,
+				7F2865F4256C1DB60038ED51 /* Models */,
 				A780DC652562F95000107631 /* shoplrApp.swift */,
-				A780DC7E2563C77700107631 /* Item.swift */,
-				A780DC7425630CD500107631 /* ShoppingList.swift */,
-				A780DC7A256319D400107631 /* ShoppingListView.swift */,
-				A780DC7C25631CF300107631 /* AddItemModalView.swift */,
-				A780DC782563177400107631 /* CreateListModalView.swift */,
-				A780DC672562F95000107631 /* ContentView.swift */,
 				A780DC7625630E3F00107631 /* ShoppingListStore.swift */,
 				A780DC6E2562F95400107631 /* Info.plist */,
 				A780DC692562F95400107631 /* Assets.xcassets */,
@@ -309,6 +309,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"shoplr/Preview Content\"";
+				DEVELOPMENT_TEAM = 9LQS3688HG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = shoplr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -330,6 +331,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"shoplr/Preview Content\"";
+				DEVELOPMENT_TEAM = 9LQS3688HG;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = shoplr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
