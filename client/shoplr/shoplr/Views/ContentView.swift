@@ -20,7 +20,6 @@ struct ContentView: View {
             if let shoppingLists = shoppingListStore.shoppingLists{
                 List{
                     ForEach(shoppingLists){list in
-                        
                         NavigationLink(destination: ShoppingListView(shoppingList: list)){
                             
                             Label(
@@ -50,7 +49,6 @@ struct ContentView: View {
                                         }
                 )
                 .environment(\.editMode, $editMode)
-                
             }
         }
     }
@@ -67,6 +65,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(ShoppingListStore())
     }
 }

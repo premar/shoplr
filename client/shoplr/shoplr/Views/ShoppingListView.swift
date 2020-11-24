@@ -10,6 +10,7 @@ import SwiftUI
 struct ShoppingListView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
+   
     
     var shoppingList: ShoppingList
     @State private var isAddItemModalPresented: Bool = false
@@ -24,8 +25,9 @@ struct ShoppingListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             List {
-                if let items = shoppingListStore.shoppingLists?[shoppingListIndex!].items {
+                if let items = shoppingList.items {
                     ForEach(items, id: \.self) { item in
+                        
                         itemCellView(item: item)
                     }
                     addNewItemElementView()
@@ -85,7 +87,7 @@ struct ShoppingListView: View {
                 }
             TextField("Artikel eingeben", text: $newItemName,
                       onCommit: {
-                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: Date(), bought: false),shoppingList: shoppingList)
+                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: Date(), bought: false),shoppingList: self.shoppingList)
                         newItemName = ""
                       })
         }
