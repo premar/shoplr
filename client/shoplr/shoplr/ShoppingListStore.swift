@@ -16,12 +16,15 @@ class ShoppingListStore: ObservableObject {
     private let TIMER: Double = 60
     
     private var timer: Timer?
+    
     private var listIds: [String] {
-        get {
-            UserDefaults.standard.stringArray(forKey: "ShoppingListIds") ?? [String]()
+        get{
+            let userDefaults = UserDefaults(suiteName: "group.ch.hslu.ios.team1.shoplr")
+            return userDefaults?.array(forKey: "ShoppingListIds") as? [String] ?? [String]()
         }
         set {
-            UserDefaults.standard.set(newValue,forKey: "ShoppingListIds")
+            let userDefaults = UserDefaults(suiteName: "group.ch.hslu.ios.team1.shoplr")
+            userDefaults?.set(newValue,forKey: "ShoppingListIds")
         }
     }
         
@@ -30,7 +33,10 @@ class ShoppingListStore: ObservableObject {
     // MARK: Initialization
     
     private init() {
-        timer = Timer.scheduledTimer(timeInterval: TIMER, target: self, selector: #selector(updateShoppingList), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: TIMER,
+                                     target: self,
+                                     selector: #selector(updateShoppingList),
+                                     userInfo: nil, repeats: true)
         
         listIds.forEach { id in
             print(id)
@@ -132,7 +138,7 @@ class ShoppingListStore: ObservableObject {
     private func sendRequestToEndpoint(url: String, data: Data!, method: String) {
         let endpoint = URL(string: ENDPOINT + url)!
         var request = URLRequest(url: endpoint)
-                
+        
         request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
         
@@ -159,7 +165,7 @@ class ShoppingListStore: ObservableObject {
     private func receiveShoppingListFromEndpoint(url: String, body: Data!, method: String) {
         let endpoint = URL(string: ENDPOINT + url)!
         var request = URLRequest(url: endpoint)
-    
+        
         request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
         

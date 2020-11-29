@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A71C883A256F99D0009BECC1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71C8839256F99D0009BECC1 /* WidgetKit.framework */; };
+		A71C883C256F99D0009BECC1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A71C883B256F99D0009BECC1 /* SwiftUI.framework */; };
+		A71C8841256F99D4009BECC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A71C8840256F99D4009BECC1 /* Assets.xcassets */; };
+		A71C8845256F99D4009BECC1 /* ShoplrWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A71C8837256F99D0009BECC1 /* ShoplrWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A71C885E256F9D58009BECC1 /* ShoplrWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C885A256F9D54009BECC1 /* ShoplrWidget.swift */; };
+		A71C8869256FA26A009BECC1 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7425630CD500107631 /* ShoppingList.swift */; };
+		A71C886C256FA271009BECC1 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7E2563C77700107631 /* Item.swift */; };
+		A74C284E257D695200DEAEA5 /* ItemListWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C284D257D695200DEAEA5 /* ItemListWidgetView.swift */; };
+		A74C2853257D695800DEAEA5 /* ShoplrWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C2847257D691B00DEAEA5 /* ShoplrWidgetEntryView.swift */; };
+		A75215AF257402B500A4533B /* ShoppingListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7625630E3F00107631 /* ShoppingListStore.swift */; };
 		A780DC662562F95000107631 /* shoplrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC652562F95000107631 /* shoplrApp.swift */; };
 		A780DC682562F95000107631 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC672562F95000107631 /* ContentView.swift */; };
 		A780DC6A2562F95400107631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A780DC692562F95400107631 /* Assets.xcassets */; };
@@ -19,7 +29,41 @@
 		A780DC7F2563C77700107631 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7E2563C77700107631 /* Item.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A71C8843256F99D4009BECC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A780DC5A2562F95000107631 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A71C8836256F99D0009BECC1;
+			remoteInfo = ShoplrWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A71C8846256F99D4009BECC1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A71C8845256F99D4009BECC1 /* ShoplrWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A71C8837256F99D0009BECC1 /* ShoplrWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShoplrWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A71C8839256F99D0009BECC1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A71C883B256F99D0009BECC1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A71C8840256F99D4009BECC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A71C8842256F99D4009BECC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A71C885A256F9D54009BECC1 /* ShoplrWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoplrWidget.swift; sourceTree = "<group>"; };
+		A74C2847257D691B00DEAEA5 /* ShoplrWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoplrWidgetEntryView.swift; sourceTree = "<group>"; };
+		A74C284D257D695200DEAEA5 /* ItemListWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListWidgetView.swift; sourceTree = "<group>"; };
+		A75215CB2576803000A4533B /* shoplr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shoplr.entitlements; sourceTree = "<group>"; };
+		A75215D42576808900A4533B /* ShoplrWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoplrWidgetExtension.entitlements; sourceTree = "<group>"; };
 		A780DC622562F95000107631 /* shoplr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shoplr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A780DC652562F95000107631 /* shoplrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shoplrApp.swift; sourceTree = "<group>"; };
 		A780DC672562F95000107631 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,6 +79,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A71C8834256F99D0009BECC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71C883C256F99D0009BECC1 /* SwiftUI.framework in Frameworks */,
+				A71C883A256F99D0009BECC1 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A780DC5F2562F95000107631 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -65,10 +118,42 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		A71C8838256F99D0009BECC1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A71C8839256F99D0009BECC1 /* WidgetKit.framework */,
+				A71C883B256F99D0009BECC1 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A71C883D256F99D0009BECC1 /* ShoplrWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A74C2846257D68FD00DEAEA5 /* Views */,
+				A71C885A256F9D54009BECC1 /* ShoplrWidget.swift */,
+				A71C8840256F99D4009BECC1 /* Assets.xcassets */,
+				A71C8842256F99D4009BECC1 /* Info.plist */,
+			);
+			path = ShoplrWidget;
+			sourceTree = "<group>";
+		};
+		A74C2846257D68FD00DEAEA5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A74C2847257D691B00DEAEA5 /* ShoplrWidgetEntryView.swift */,
+				A74C284D257D695200DEAEA5 /* ItemListWidgetView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		A780DC592562F95000107631 = {
 			isa = PBXGroup;
 			children = (
+				A75215D42576808900A4533B /* ShoplrWidgetExtension.entitlements */,
 				A780DC642562F95000107631 /* shoplr */,
+				A71C883D256F99D0009BECC1 /* ShoplrWidget */,
+				A71C8838256F99D0009BECC1 /* Frameworks */,
 				A780DC632562F95000107631 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				A780DC622562F95000107631 /* shoplr.app */,
+				A71C8837256F99D0009BECC1 /* ShoplrWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,6 +170,7 @@
 		A780DC642562F95000107631 /* shoplr */ = {
 			isa = PBXGroup;
 			children = (
+				A75215CB2576803000A4533B /* shoplr.entitlements */,
 				7FA36C33256C1EC5009DC73F /* Views */,
 				7F2865F4256C1DB60038ED51 /* Models */,
 				A780DC652562F95000107631 /* shoplrApp.swift */,
@@ -106,6 +193,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A71C8836256F99D0009BECC1 /* ShoplrWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A71C8849256F99D4009BECC1 /* Build configuration list for PBXNativeTarget "ShoplrWidgetExtension" */;
+			buildPhases = (
+				A71C8833256F99D0009BECC1 /* Sources */,
+				A71C8834256F99D0009BECC1 /* Frameworks */,
+				A71C8835256F99D0009BECC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShoplrWidgetExtension;
+			productName = ShoplrWidgetExtension;
+			productReference = A71C8837256F99D0009BECC1 /* ShoplrWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A780DC612562F95000107631 /* shoplr */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A780DC712562F95400107631 /* Build configuration list for PBXNativeTarget "shoplr" */;
@@ -113,10 +217,12 @@
 				A780DC5E2562F95000107631 /* Sources */,
 				A780DC5F2562F95000107631 /* Frameworks */,
 				A780DC602562F95000107631 /* Resources */,
+				A71C8846256F99D4009BECC1 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A71C8844256F99D4009BECC1 /* PBXTargetDependency */,
 			);
 			name = shoplr;
 			productName = shoplr;
@@ -129,9 +235,15 @@
 		A780DC5A2562F95000107631 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				KnownAssetTags = (
+					New,
+				);
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					A71C8836256F99D0009BECC1 = {
+						CreatedOnToolsVersion = 12.2;
+					};
 					A780DC612562F95000107631 = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -151,11 +263,20 @@
 			projectRoot = "";
 			targets = (
 				A780DC612562F95000107631 /* shoplr */,
+				A71C8836256F99D0009BECC1 /* ShoplrWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A71C8835256F99D0009BECC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A71C8841256F99D4009BECC1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A780DC602562F95000107631 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,6 +289,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A71C8833256F99D0009BECC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A74C284E257D695200DEAEA5 /* ItemListWidgetView.swift in Sources */,
+				A74C2853257D695800DEAEA5 /* ShoplrWidgetEntryView.swift in Sources */,
+				A71C885E256F9D58009BECC1 /* ShoplrWidget.swift in Sources */,
+				A71C886C256FA271009BECC1 /* Item.swift in Sources */,
+				A71C8869256FA26A009BECC1 /* ShoppingList.swift in Sources */,
+				A75215AF257402B500A4533B /* ShoppingListStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A780DC5E2562F95000107631 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,7 +319,67 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A71C8844256F99D4009BECC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A71C8836256F99D0009BECC1 /* ShoplrWidgetExtension */;
+			targetProxy = A71C8843256F99D4009BECC1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		A71C8847256F99D4009BECC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShoplrWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 3BEQJR6GA5;
+				INFOPLIST_FILE = ShoplrWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.team1.shoplr.ShoplrWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A71C8848256F99D4009BECC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShoplrWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 3BEQJR6GA5;
+				INFOPLIST_FILE = ShoplrWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.team1.shoplr.ShoplrWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		A780DC6F2562F95400107631 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -305,11 +499,14 @@
 		A780DC722562F95400107631 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = shoplr/shoplr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"shoplr/Preview Content\"";
-				DEVELOPMENT_TEAM = 9LQS3688HG;
+				DEVELOPMENT_TEAM = 3BEQJR6GA5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = shoplr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -317,8 +514,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.shoplr;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.team1.shoplr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -327,11 +525,14 @@
 		A780DC732562F95400107631 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = shoplr/shoplr.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"shoplr/Preview Content\"";
-				DEVELOPMENT_TEAM = 9LQS3688HG;
+				DEVELOPMENT_TEAM = 3BEQJR6GA5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = shoplr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -339,8 +540,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.shoplr;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.hslu.ios.team1.shoplr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -349,6 +551,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A71C8849256F99D4009BECC1 /* Build configuration list for PBXNativeTarget "ShoplrWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A71C8847256F99D4009BECC1 /* Debug */,
+				A71C8848256F99D4009BECC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A780DC5D2562F95000107631 /* Build configuration list for PBXProject "shoplr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -28,8 +28,8 @@ struct ShoppingListView: View {
             }.sheet(isPresented: self.$isAddItemModalPresented,onDismiss: {print("dismissed")
                 self.isAddItemModalPresented = false
             }) {
-             AddItemModalView(shoppingList: shoppingList)
-         }
+                AddItemModalView(shoppingList: shoppingList)
+            }
             createBottomButtonsView()
         }.navigationBarTitle(shoppingList.name).toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -105,32 +105,33 @@ struct ItemRowView: View{
         HStack{
             Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
                 
-                    if item.bought{
-                        Label(
-                            title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
-                            icon: {Image(systemName: "checkmark.circle")}
-                        )
-                    }
-                    else{
-                        Label(
-                            title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")) },
-                            icon: {Image(systemName: "circle")}
-                        )
-                        
-                        
-                    }
-    
+                if item.bought{
+                    Label(
+                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
+                        icon: {Image(systemName: "checkmark.circle")}
+                    )
+                }
+                else{
+                    Label(
+                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")) },
+                        icon: {Image(systemName: "circle")}
+                    )
+                    
+                    
+                }
+                
             })
             Spacer()
             if(item.expiryDate != nil){
                 
-                    Image(systemName:"clock").onTapGesture {
+                Image(systemName:"clock")
+                    .onTapGesture {
                         showDateAlert = true
                     }.alert(isPresented: $showDateAlert, content: {
                         Alert(title: Text("Diesen Artikel brauche ich bis"), message: Text(item.expiryDate!,style: .date), dismissButton: .default(Text("Ok")))
-                    })
-                    
-               
+                    }).imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
+                
+                
                 
             }
             
