@@ -47,91 +47,45 @@ class ShoppingListStore: ObservableObject {
     }
     
     private func getListFromServer(listId: String) {
-        let url = URL(string: ENDPOINT + "/v1/list/\(listId)/")!
-        var request = URLRequest(url: url)
-                
-        request.httpMethod = "GET"
-        request.setValue(KEY, forHTTPHeaderField: "Authorization")
-        
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                // TODO handle error
-                print(error)
-            } else if let data = data {
-                // TODO handle data
-                let list = try! JSONDecoder().decode([ShoppingList].self, from: data)
-                print(list)
-            } else {
-                // TODO handle exception
-                print("Exception")
-            }
-        }
-        task.resume()
+        let data = receiveDataFromEndpoint(url: "/v1/list/\(listId)/", data: nil, method: "GET")!
+        let list = try! JSONDecoder().decode([ShoppingList].self, from: data)
     }
     
     private func addItemToServer(listId: String, item: Item) {
-        let url = URL(string: ENDPOINT + "/v1/item/\(listId)/")!
-        var request = URLRequest(url: url)
-        
-        let body = try! JSONEncoder().encode(item)
-        
-        request.httpMethod = "POST"
-        request.setValue(KEY, forHTTPHeaderField: "Authorization")
-        request.httpBody = body
-        
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                // TODO handle error
-                print(error)
-            } else if let data = data {
-                // TODO handle data
-                print(data)
-            } else {
-                // TODO handle exception
-                print("Exception")
-            }
-        }
-        task.resume()
+        let data = try! JSONEncoder().encode(item)
+        sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "POST")
     }
     
     private func addListToServer(list: ShoppingList) {
-        let url = URL(string: ENDPOINT + "/v1/list/")!
-        var request = URLRequest(url: url)
-        
         let body: [String: Any] = [
             "name": list.name,
             "icon": list.icon,
             "uuid": list.id.uuidString
         ]
         
-        request.httpMethod = "POST"
-        request.setValue(KEY, forHTTPHeaderField: "Authorization")
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        let data = try? JSONSerialization.data(withJSONObject: body, options: [])
         
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                // TODO handle error
-                print(error)
-            } else if let data = data {
-                // TODO handle data
-                print(data)
-            } else {
-                // TODO handle exception
-                print("Exception")
-            }
-        }
-        task.resume()
+        sendRequestToEndpoint(url: "/v1/list/", data: data, method: "POST")
     }
     
     private func deleteItemOnServer(itemId: String, listId: String) {
-        let url = URL(string: ENDPOINT + "/v1/item/\(listId)/\(itemId)")!
-        var request = URLRequest(url: url)
+        sendRequestToEndpoint(url: "/v1/item/\(listId)/\(itemId)", data: nil, method: "DELETE")
+    }
+    
+    private func deleteListOnServer(listId: String) {
+        sendRequestToEndpoint(url: "/v1/list/\(listId)/", data: nil, method: "DELETE")
+    }
+    
+    private func sendRequestToEndpoint(url: String, data: Data!, method: String) {
+        let endpoint = URL(string: ENDPOINT + "/\(url)")!
+        var request = URLRequest(url: endpoint)
                 
-        request.httpMethod = "DELETE"
+        request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        
+        if(data != nil) {
+            request.httpBody = data
+        }
         
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
@@ -149,12 +103,22 @@ class ShoppingListStore: ObservableObject {
         task.resume()
     }
     
-    private func deleteListOnServer(listId: String) {
-        let url = URL(string: ENDPOINT + "/v1/list/\(listId)/")!
-        var request = URLRequest(url: url)
+    // Best Option?
+    // Callback Function
+    // NSLoock
+    // DispatchSemaphore
+    private func receiveDataFromEndpoint(url: String, data: Data!, method: String) -> Data? {
+        let endpoint = URL(string: ENDPOINT + "/\(url)")!
+        let lock = NSLock()
+        var request = URLRequest(url: endpoint)
+        
                 
-        request.httpMethod = "DELETE"
+        request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        
+        if(data != nil) {
+            request.httpBody = data
+        }
         
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
@@ -162,13 +126,15 @@ class ShoppingListStore: ObservableObject {
                 // TODO handle error
                 print(error)
             } else if let data = data {
-                // TODO handle data
                 print(data)
             } else {
                 // TODO handle exception
                 print("Exception")
             }
+            lock.unlock()
         }
         task.resume()
+        lock.lock()
+        return data
     }
 }
