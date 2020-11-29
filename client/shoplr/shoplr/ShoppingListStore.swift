@@ -14,9 +14,6 @@ class ShoppingListStore: ObservableObject {
     @Published var shoppingLists: [ShoppingList]?
     
     init() {
-        
-        getListFromServer(uuid: "1234");
-        
         shoppingLists = [ShoppingList( name: "Family", icon: "😃", items: [Item(name: "Apples", specification: "10", icon: "", expiryDate: Date(), bought: false),Item(name: "Cheese", specification: "1", icon: "", expiryDate: Date(), bought: false)]),
                          ShoppingList( name: "WG", icon: "🍺", items: [Item(name: "Beer", specification: "Braufrisch", icon: "", expiryDate: Date(), bought: false), Item(name: "Chips", specification: "Zweifel", icon: "", expiryDate: Date(), bought: false)]),
                          ShoppingList( name: "Book Club", icon: "📚", items:
@@ -49,22 +46,128 @@ class ShoppingListStore: ObservableObject {
         print("cleanUpBoughtItems \(shoppingList)")
     }
     
-    private func getListFromServer(uuid: String) {
-        let parameters = ["uuid": uuid, "key" : KEY]
-        var urlComponents = URLComponents(string: ENDPOINT)
-
-        var queryItems = [URLQueryItem]()
-        for (key, value) in parameters {
-            queryItems.append(URLQueryItem(name: key, value: value))
-        }
-
-        urlComponents?.queryItems = queryItems
-
-        var request = URLRequest(url: (urlComponents?.url)!)
+    private func getListFromServer(listId: String) {
+        let url = URL(string: ENDPOINT + "/v1/list/\(listId)/")!
+        var request = URLRequest(url: url)
+                
         request.httpMethod = "GET"
-
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
-            print(response)
+        request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                // TODO handle error
+                print(error)
+            } else if let data = data {
+                // TODO handle data
+                let list = try! JSONDecoder().decode([ShoppingList].self, from: data)
+                print(list)
+            } else {
+                // TODO handle exception
+                print("Exception")
+            }
+        }
+        task.resume()
+    }
+    
+    private func addItemToServer(listId: String, item: Item) {
+        let url = URL(string: ENDPOINT + "/v1/item/\(listId)/")!
+        var request = URLRequest(url: url)
+        
+        let body = try! JSONEncoder().encode(item)
+        
+        request.httpMethod = "POST"
+        request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        request.httpBody = body
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                // TODO handle error
+                print(error)
+            } else if let data = data {
+                // TODO handle data
+                print(data)
+            } else {
+                // TODO handle exception
+                print("Exception")
+            }
+        }
+        task.resume()
+    }
+    
+    private func addListToServer(list: ShoppingList) {
+        let url = URL(string: ENDPOINT + "/v1/list/")!
+        var request = URLRequest(url: url)
+        
+        let body: [String: Any] = [
+            "name": list.name,
+            "icon": list.icon,
+            "uuid": list.id.uuidString
+        ]
+        
+        request.httpMethod = "POST"
+        request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                // TODO handle error
+                print(error)
+            } else if let data = data {
+                // TODO handle data
+                print(data)
+            } else {
+                // TODO handle exception
+                print("Exception")
+            }
+        }
+        task.resume()
+    }
+    
+    private func deleteItemOnServer(itemId: String, listId: String) {
+        let url = URL(string: ENDPOINT + "/v1/item/\(listId)/\(itemId)")!
+        var request = URLRequest(url: url)
+                
+        request.httpMethod = "DELETE"
+        request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                // TODO handle error
+                print(error)
+            } else if let data = data {
+                // TODO handle data
+                print(data)
+            } else {
+                // TODO handle exception
+                print("Exception")
+            }
+        }
+        task.resume()
+    }
+    
+    private func deleteListOnServer(listId: String) {
+        let url = URL(string: ENDPOINT + "/v1/list/\(listId)/")!
+        var request = URLRequest(url: url)
+                
+        request.httpMethod = "DELETE"
+        request.setValue(KEY, forHTTPHeaderField: "Authorization")
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                // TODO handle error
+                print(error)
+            } else if let data = data {
+                // TODO handle data
+                print(data)
+            } else {
+                // TODO handle exception
+                print("Exception")
+            }
         }
         task.resume()
     }
