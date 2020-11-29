@@ -14,8 +14,7 @@ def default_route():
 def new_list():
     if request.method == 'POST':
         shoplr_list = request.json
-        if shoplr_list['key'] == application.config['API_KEY']:
-
+        if request.headers['Authorization'] == application.config['API_KEY']:
             data = {
                 'identifier': 'meta',
                 'name': shoplr_list['name'],
@@ -39,7 +38,7 @@ def new_list():
 def new_item(list_uuid):
     if request.method == 'POST':
         shoplr_item = request.json
-        if shoplr_item['key'] == application.config['API_KEY']:
+        if request.headers['Authorization'] == application.config['API_KEY']:
             data = {'identifier': 'item',
                     'uuid': shoplr_item['uuid'],
                     'name': shoplr_item['name'],
@@ -59,10 +58,10 @@ def new_item(list_uuid):
             return resp
 
 
-@application.route('/v1/list/<string:list_uuid>/<string:api_key>', methods=['GET'])
-def get_item(list_uuid, api_key):
+@application.route('/v1/list/<string:list_uuid>', methods=['GET'])
+def get_item(list_uuid):
     if request.method == 'GET':
-        if api_key == application.config['API_KEY']:
+        if request.headers['Authorization'] == application.config['API_KEY']:
             client = MongoClient(application.config["DB_SERVER_URI"])
             db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
@@ -75,10 +74,10 @@ def get_item(list_uuid, api_key):
             return resp
 
 
-@application.route('/v1/list/<string:list_uuid>/<string:api_key>', methods=['DELETE'])
-def delete_list(list_uuid, api_key):
+@application.route('/v1/list/<string:list_uuid>', methods=['DELETE'])
+def delete_list(list_uuid):
     if request.method == 'DELETE':
-        if api_key == application.config['API_KEY']:
+        if request.headers['Authorization'] == application.config['API_KEY']:
             client = MongoClient(application.config["DB_SERVER_URI"])
             db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
@@ -92,10 +91,10 @@ def delete_list(list_uuid, api_key):
             return resp
 
 
-@application.route('/v1/item/<string:list_uuid>/<string:item_uuid>/<string:api_key>', methods=['DELETE'])
-def delete_item(list_uuid, item_uuid, api_key):
+@application.route('/v1/item/<string:list_uuid>/<string:item_uuid>/', methods=['DELETE'])
+def delete_item(list_uuid, item_uuid):
     if request.method == 'DELETE':
-        if api_key == application.config['API_KEY']:
+        if request.headers['Authorization'] == application.config['API_KEY']:
             client = MongoClient(application.config["DB_SERVER_URI"])
             db = client[application.config["DB_NAME"]]
             collection = db[list_uuid]
