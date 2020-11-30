@@ -30,8 +30,8 @@ class ShoppingListStore: ObservableObject {
     public func addItemToShoppingList(item: Item, shoppingList: ShoppingList){
         print("addItemToShoppingList\(item) \(shoppingList)")
         let idx = shoppingLists.firstIndex(of: shoppingList)
-        self.shoppingLists[idx!].items!.append(item)
-        print(self.shoppingLists[idx!].items!)
+        self.shoppingLists[idx!].items.append(item)
+        print(self.shoppingLists[idx!].items)
     }
     
     public func toggleBoughtStateofItem(item: Item, shoppingList:ShoppingList){

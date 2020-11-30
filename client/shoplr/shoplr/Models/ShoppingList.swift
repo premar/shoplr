@@ -25,7 +25,7 @@ class ShoppingList: Identifiable, Hashable, Equatable, Codable{
     var id = UUID()
     let name: String
     let icon: String
-    var items: [Item]?
+    var items = [Item]()
     
     init(name: String, icon: String ) {
         self.name = name
