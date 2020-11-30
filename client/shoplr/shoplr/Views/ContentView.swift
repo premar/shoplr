@@ -58,7 +58,7 @@ struct ContentView: View {
     
     //TODO how to handle with server side communication
     private func onMove(source: IndexSet, destination: Int) {
-        shoppingListStore.shoppingLists!.move(fromOffsets: source, toOffset: destination)
+        shoppingListStore.shoppingLists.move(fromOffsets: source, toOffset: destination)
         
     }
 }

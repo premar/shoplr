@@ -22,14 +22,15 @@ class ShoppingList: Identifiable, Hashable, Equatable, Codable{
             hasher.combine(items)
     }
     
-    var id = UUID()
+    let id: UUID
     let name: String
     let icon: String
-    var items: [Item]?
+    var items = [Item]()
     
     init(name: String, icon: String ) {
         self.name = name
         self.icon = icon
+        self.id  = UUID()
     }
     
     //TODO only used for debugging
@@ -37,5 +38,13 @@ class ShoppingList: Identifiable, Hashable, Equatable, Codable{
         self.name = name
         self.icon = icon
         self.items = items
+        self.id = UUID()
+    }
+    
+    init(name: String, icon: String , items: [Item], id: UUID) {
+        self.name = name
+        self.icon = icon
+        self.items = items
+        self.id = id
     }
 }
