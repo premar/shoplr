@@ -11,23 +11,32 @@ class ShoppingListStore: ObservableObject {
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
     
-    @Published var shoppingLists =  [ShoppingList]()
+    @Published var shoppingLists = [ShoppingList]()
     
     init() {
+        // Dummy list for debug
         getListFromServer(listId: "DAD92F80-B46F-4A14-B714-C6B06C117771")
     }
         
     // MARK: - Shoppinglist actions
-    public func removeList(index: IndexSet){
+    public func removeList(index: IndexSet) {
+        
+        // TODO Rename index to indexSet, because it can hold more than one index
+        for i in index {
+            deleteListOnServer(listId: (shoppingLists[i]).id.uuidString)
+        }
+        
         shoppingLists.remove(atOffsets: index)
     }
     
-    public func createShoppingList(shoppingList:ShoppingList){
+    public func createShoppingList(shoppingList: ShoppingList) {
+        addListToServer(list: shoppingList)
         shoppingLists.append(shoppingList)
     }
     
     // MARK: - Item actions
-    public func addItemToShoppingList(item: Item, shoppingList: ShoppingList){
+    public func addItemToShoppingList(item: Item, shoppingList: ShoppingList) {
+        addItemToServer(listId: shoppingList.id.uuidString, item: item)
         print("addItemToShoppingList\(item) \(shoppingList)")
         let idx = shoppingLists.firstIndex(of: shoppingList)
         self.shoppingLists[idx!].items.append(item)
@@ -38,7 +47,7 @@ class ShoppingListStore: ObservableObject {
         print("toggleBoughtStateofItem \(item) \(shoppingList)")
     }
     
-    public func cleanUpBoughtItems(shoppingList: ShoppingList){
+    public func cleanUpBoughtItems(shoppingList: ShoppingList) {
         print("cleanUpBoughtItems \(shoppingList)")
     }
     
@@ -55,7 +64,7 @@ class ShoppingListStore: ObservableObject {
         let body: [String: Any] = [
             "name": list.name,
             "icon": list.icon,
-            "uuid": list.id.uuidString
+            "id": list.id.uuidString
         ]
         
         let data = try? JSONSerialization.data(withJSONObject: body, options: [])
@@ -118,9 +127,11 @@ class ShoppingListStore: ObservableObject {
                 print(error)
             } else if let data = data {
                 print(data)
-                let list =  try! JSONDecoder().decode(ShoppingList.self, from: data)
+                let list =  try? JSONDecoder().decode(ShoppingList.self, from: data)
                 DispatchQueue.main.async {
-                    self.shoppingLists.append(list)
+                    if (list != nil) {
+                        self.shoppingLists.append(list!)
+                    }
                 }
             } else {
                 // TODO handle exception
