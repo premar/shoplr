@@ -18,7 +18,7 @@ struct ShoppingListView: View {
     @State private var newItemName: String = ""
     
     var shoppingListIndex: Int?{
-        shoppingListStore.shoppingLists?.firstIndex(where: {$0.id == shoppingList.id})
+        shoppingListStore.shoppingLists.firstIndex(where: {$0.id == shoppingList.id})
     }
     
     
@@ -128,7 +128,7 @@ struct ShoppingListView: View {
 
 struct ShoppingListView_Previews: PreviewProvider {
     static var previews: some View {
-        ShoppingListView(shoppingList: ShoppingListStore().shoppingLists![1])
+        ShoppingListView(shoppingList: ShoppingListStore().shoppingLists[1])
     }
 }
 

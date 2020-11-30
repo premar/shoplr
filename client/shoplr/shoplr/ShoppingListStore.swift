@@ -11,31 +11,27 @@ class ShoppingListStore: ObservableObject {
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
     
-    @Published var shoppingLists: [ShoppingList]?
+    @Published var shoppingLists =  [ShoppingList]()
     
     init() {
-        shoppingLists = [ShoppingList( name: "Family", icon: "😃", items: [Item(name: "Apples", specification: "10", icon: "", expiryDate: Date(), bought: false),Item(name: "Cheese", specification: "1", icon: "", expiryDate: Date(), bought: false)]),
-                         ShoppingList( name: "WG", icon: "🍺", items: [Item(name: "Beer", specification: "Braufrisch", icon: "", expiryDate: Date(), bought: false), Item(name: "Chips", specification: "Zweifel", icon: "", expiryDate: Date(), bought: false)]),
-                         ShoppingList( name: "Book Club", icon: "📚", items:
-                                        [Item(name: "Clean Code", specification: "Rober C Martin", icon: "", expiryDate: Date(), bought: false),Item(name: "Fire and Fury", specification: "2x", icon: "", expiryDate: Date(), bought: false)])
-        ]
+        getListFromServer(listId: "DAD92F80-B46F-4A14-B714-C6B06C117771")
     }
-    
+        
     // MARK: - Shoppinglist actions
     public func removeList(index: IndexSet){
-        shoppingLists!.remove(atOffsets: index)
+        shoppingLists.remove(atOffsets: index)
     }
     
     public func createShoppingList(shoppingList:ShoppingList){
-        shoppingLists?.append(shoppingList)
+        shoppingLists.append(shoppingList)
     }
     
     // MARK: - Item actions
     public func addItemToShoppingList(item: Item, shoppingList: ShoppingList){
         print("addItemToShoppingList\(item) \(shoppingList)")
-        var idx = shoppingLists!.firstIndex(of: shoppingList)
-        self.shoppingLists![idx!].items!.append(item)
-        print(self.shoppingLists![idx!].items!)
+        let idx = shoppingLists.firstIndex(of: shoppingList)
+        self.shoppingLists[idx!].items!.append(item)
+        print(self.shoppingLists[idx!].items!)
     }
     
     public func toggleBoughtStateofItem(item: Item, shoppingList:ShoppingList){
@@ -47,8 +43,7 @@ class ShoppingListStore: ObservableObject {
     }
     
     private func getListFromServer(listId: String) {
-        let data = receiveDataFromEndpoint(url: "/v1/list/\(listId)/", data: nil, method: "GET")!
-        let list = try! JSONDecoder().decode([ShoppingList].self, from: data)
+        receiveDataFromEndpoint(url: "/v1/list/\(listId)/", body: nil, method: "GET")
     }
     
     private func addItemToServer(listId: String, item: Item) {
@@ -77,13 +72,14 @@ class ShoppingListStore: ObservableObject {
     }
     
     private func sendRequestToEndpoint(url: String, data: Data!, method: String) {
-        let endpoint = URL(string: ENDPOINT + "/\(url)")!
+        let endpoint = URL(string: ENDPOINT + url)!
         var request = URLRequest(url: endpoint)
                 
         request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
         
         if(data != nil) {
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.httpBody = data
         }
         
@@ -103,21 +99,16 @@ class ShoppingListStore: ObservableObject {
         task.resume()
     }
     
-    // Best Option?
-    // Callback Function
-    // NSLoock
-    // DispatchSemaphore
-    private func receiveDataFromEndpoint(url: String, data: Data!, method: String) -> Data? {
-        let endpoint = URL(string: ENDPOINT + "/\(url)")!
-        let lock = NSLock()
+    private func receiveDataFromEndpoint(url: String, body: Data!, method: String) {
+        let endpoint = URL(string: ENDPOINT + url)!
         var request = URLRequest(url: endpoint)
-        
-                
+    
         request.httpMethod = method
         request.setValue(KEY, forHTTPHeaderField: "Authorization")
         
-        if(data != nil) {
-            request.httpBody = data
+        if(body != nil) {
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body
         }
         
         let session = URLSession.shared
@@ -127,14 +118,15 @@ class ShoppingListStore: ObservableObject {
                 print(error)
             } else if let data = data {
                 print(data)
+                let list =  try! JSONDecoder().decode(ShoppingList.self, from: data)
+                DispatchQueue.main.async {
+                    self.shoppingLists.append(list)
+                }
             } else {
                 // TODO handle exception
                 print("Exception")
             }
-            lock.unlock()
         }
         task.resume()
-        lock.lock()
-        return data
     }
 }

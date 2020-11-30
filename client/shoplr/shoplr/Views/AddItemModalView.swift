@@ -44,6 +44,6 @@ struct AddItemModalView: View {
 }
 struct AddItemModalView_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemModalView(shoppingList: ShoppingListStore().shoppingLists![1])
+        AddItemModalView(shoppingList: ShoppingListStore().shoppingLists[1])
     }
 }
