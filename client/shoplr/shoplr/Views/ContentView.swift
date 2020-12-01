@@ -41,10 +41,12 @@ struct ContentView: View {
                 .navigationBarTitle("Einkaufslisten")
                 .navigationBarItems(leading: EditButton(),trailing:
                                         Button(action: {
-                                            self.isCreateModalPresented.toggle()
+                                            self.isCreateModalPresented=true
                                         }) {
                                             Image(systemName: "plus")
-                                        }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {print("dismissed")}) {
+                                        }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {print("dismissed")
+                                            self.isCreateModalPresented = false
+                                        }) {
                                             CreateListModalView()
                                         }
                 )

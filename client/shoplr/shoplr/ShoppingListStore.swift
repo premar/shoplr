@@ -15,23 +15,38 @@ class ShoppingListStore: ObservableObject {
     
     init() {
         // Dummy list for debug
-        getListFromServer(listId: "DAD92F80-B46F-4A14-B714-C6B06C117771")
+        listIds.forEach{ id in
+            print(id)
+            getListFromServer(listId: id)
+        }
     }
-        
+    private var listIds: [String]{
+        get{
+            UserDefaults.standard.stringArray(forKey: "ShoppingListIds") ?? [String]()
+            
+        }
+        set{
+            UserDefaults.standard.set(newValue,forKey: "ShoppingListIds")
+        }
+    }
+    
     // MARK: - Shoppinglist actions
     public func removeList(index: IndexSet) {
-        
         // TODO Rename index to indexSet, because it can hold more than one index
         for i in index {
             deleteListOnServer(listId: (shoppingLists[i]).id.uuidString)
+            //remove id from user defaults
+            if let listIdIndex = listIds.firstIndex(of: shoppingLists[i].id.uuidString) {
+                listIds.remove(at: listIdIndex)
+            }
         }
-        
         shoppingLists.remove(atOffsets: index)
     }
     
     public func createShoppingList(shoppingList: ShoppingList) {
         addListToServer(list: shoppingList)
         shoppingLists.append(shoppingList)
+        listIds.append(shoppingList.id.uuidString)
     }
     
     // MARK: - Item actions
@@ -44,7 +59,11 @@ class ShoppingListStore: ObservableObject {
     }
     
     public func toggleBoughtStateofItem(item: Item, shoppingList:ShoppingList){
-        print("toggleBoughtStateofItem \(item) \(shoppingList)")
+        let idx = shoppingLists.firstIndex(of: shoppingList)
+        let list = self.shoppingLists[idx!]
+        if let itemIdx = list.items.firstIndex(of: item){
+            list.items[itemIdx].bought.toggle()
+        }
     }
     
     public func cleanUpBoughtItems(shoppingList: ShoppingList) {

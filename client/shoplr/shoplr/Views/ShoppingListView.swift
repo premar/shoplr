@@ -8,31 +8,30 @@
 import SwiftUI
 
 struct ShoppingListView: View {
-    @Environment(\.presentationMode) var presentationMode
+    //@Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
-   
     
+    @ObservedObject
     var shoppingList: ShoppingList
     @State private var isAddItemModalPresented: Bool = false
     
     @State private var newItemName: String = ""
-    
-    var shoppingListIndex: Int?{
-        shoppingListStore.shoppingLists.firstIndex(where: {$0.id == shoppingList.id})
-    }
-    
     
     var body: some View {
         VStack(alignment: .leading) {
             List {
                 if let items = shoppingList.items {
                     ForEach(items, id: \.self) { item in
-                        
-                        itemCellView(item: item)
+                        ItemRowView(item: item,shoppingList: shoppingList)
                     }
                     addNewItemElementView()
                 }
-            }
+            }.sheet(isPresented: self.$isAddItemModalPresented,onDismiss: {print("dismissed")
+                self.isAddItemModalPresented = false
+            }) {
+             //TODO modal doesn't appear properly
+             AddItemModalView(shoppingList: shoppingList)
+         }
             createBottomButtonsView()
         }.navigationBarTitle(shoppingList.name).toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -50,33 +49,8 @@ struct ShoppingListView: View {
                 }
             }
         }
-//        .navigationBarItems(trailing:
-//                                Button(action: {
-//                                    //share link action here?
-//                                }) {
-//                                    Image(systemName: "ellipsis.circle")
-//                                }
-//        )
     }
-    private func itemCellView(item: Item) -> some View {
-        HStack {
-            Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
-                if item.bought{
-                    Label(
-                        title: { Text(item.name + " (" + item.specification + ")").strikethrough() },
-                        icon: {Image(systemName: "checkmark.circle")}
-                    )
-                }
-                else{
-                    Label(
-                        title: { Text(item.name + " (" + item.specification + ")") },
-                        icon: {Image(systemName: "circle")}
-                    )
-                }
-            })
-            
-        }
-    }
+
     private func addNewItemElementView() -> some View {
         HStack {
             Image(systemName: "circle.plus")
@@ -111,10 +85,6 @@ struct ShoppingListView: View {
                 )
                 
             }
-            .sheet(isPresented: self.$isAddItemModalPresented) {
-                //TODO modal doesn't appear properly
-                AddItemModalView(shoppingList: shoppingList)
-            }
             .frame(height: 50)
             .frame(maxWidth: .infinity)
             .background(Color.blue)
@@ -125,7 +95,32 @@ struct ShoppingListView: View {
         .padding()
     }
 }
-
+struct ItemRowView: View{
+    
+    @EnvironmentObject var shoppingListStore: ShoppingListStore
+    @ObservedObject
+    var item: Item
+    let shoppingList: ShoppingList
+    var body: some View {
+        HStack{
+            Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
+                if item.bought{
+                    Label(
+                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
+                        icon: {Image(systemName: "checkmark.circle")}
+                    )
+                }
+                else{
+                    Label(
+                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")) },
+                        icon: {Image(systemName: "circle")}
+                    )
+                }
+            })
+        }
+    }
+    
+}
 struct ShoppingListView_Previews: PreviewProvider {
     static var previews: some View {
         ShoppingListView(shoppingList: ShoppingListStore().shoppingLists[1])
