@@ -34,10 +34,10 @@ class ShoppingListStore: ObservableObject {
     // MARK: ShoppingList / Item Actions
     
     public func deleteShoppingList(index: IndexSet) {
-        // TODO Rename index to indexSet, because it can hold more than one index
+        // TODO: Rename index to indexSet, because it can hold more than one index
         for i in index {
             deleteShoppingListOnEndpoint(listId: (shoppingLists[i]).id.uuidString)
-            //remove id from user defaults
+            // remove id from user defaults
             if let listIdIndex = listIds.firstIndex(of: shoppingLists[i].id.uuidString) {
                 listIds.remove(at: listIdIndex)
             }
@@ -59,16 +59,25 @@ class ShoppingListStore: ObservableObject {
         print(self.shoppingLists[idx!].items)
     }
     
-    public func toggleBoughtStateofItem(item: Item, shoppingList:ShoppingList){
+    public func toggleBoughtStateofItem(item: Item, shoppingList: ShoppingList){
         let idx = shoppingLists.firstIndex(of: shoppingList)
         let list = self.shoppingLists[idx!]
         if let itemIdx = list.items.firstIndex(of: item) {
             list.items[itemIdx].bought.toggle()
+            updateShoppingListItemOnEndpoint(listId: shoppingList.id.uuidString, item: list.items[itemIdx])
         }
     }
     
     public func cleanUpBoughtItems(shoppingList: ShoppingList) {
-        print("cleanUpBoughtItems \(shoppingList)")
+        let idx = shoppingLists.firstIndex(of: shoppingList)
+        let list = self.shoppingLists[idx!]
+        for item in list.items {
+            if(item.bought) {
+                deleteShoppingListItemOnEndpoint(itemId: item.id.uuidString, listId: list.id.uuidString)
+                let itemIdx = list.items.firstIndex(of: item)!
+                list.items.remove(at: itemIdx)
+            }
+        }
     }
     
     // MARK: Endpoint Actions
@@ -80,6 +89,11 @@ class ShoppingListStore: ObservableObject {
     private func addItemToShoppingListOnEndpoint(listId: String, item: Item) {
         let data = try! JSONEncoder().encode(item)
         sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "POST")
+    }
+    
+    private func updateShoppingListItemOnEndpoint(listId: String, item: Item) {
+        let data = try! JSONEncoder().encode(item)
+        sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "PUT")
     }
     
     private func createShoppingListOnEndpoint(list: ShoppingList) {
@@ -117,13 +131,12 @@ class ShoppingListStore: ObservableObject {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                // TODO handle error
+                // TODO: handle error
                 print(error)
             } else if let data = data {
-                // TODO handle data
                 print(data)
             } else {
-                // TODO handle exception
+                // TODO: handle exception
                 print("Exception")
             }
         }
@@ -145,7 +158,7 @@ class ShoppingListStore: ObservableObject {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                // TODO handle error
+                // TODO: handle error
                 print(error)
             } else if let data = data {
                 print(data)
@@ -156,7 +169,7 @@ class ShoppingListStore: ObservableObject {
                     }
                 }
             } else {
-                // TODO handle exception
+                // TODO: handle exception
                 print("Exception")
             }
         }
