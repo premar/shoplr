@@ -55,7 +55,7 @@ struct ContentView: View {
         }
     }
     private func onDelete(offsets: IndexSet) {
-        shoppingListStore.removeList(index: offsets)
+        shoppingListStore.deleteShoppingList(index: offsets)
     }
     
     //TODO how to handle with server side communication

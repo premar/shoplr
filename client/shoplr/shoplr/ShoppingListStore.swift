@@ -11,30 +11,32 @@ class ShoppingListStore: ObservableObject {
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
     
-    @Published var shoppingLists = [ShoppingList]()
-    
-    init() {
-        // Dummy list for debug
-        listIds.forEach{ id in
-            print(id)
-            getListFromServer(listId: id)
-        }
-    }
-    private var listIds: [String]{
-        get{
+    private var listIds: [String] {
+        get {
             UserDefaults.standard.stringArray(forKey: "ShoppingListIds") ?? [String]()
-            
         }
-        set{
+        set {
             UserDefaults.standard.set(newValue,forKey: "ShoppingListIds")
         }
     }
     
-    // MARK: - Shoppinglist actions
-    public func removeList(index: IndexSet) {
+    @Published var shoppingLists = [ShoppingList]()
+    
+    // MARK: Initialization
+    
+    init() {
+        listIds.forEach { id in
+            print(id)
+            getShoppingListFromEndpoint(listId: id)
+        }
+    }
+        
+    // MARK: ShoppingList / Item Actions
+    
+    public func deleteShoppingList(index: IndexSet) {
         // TODO Rename index to indexSet, because it can hold more than one index
         for i in index {
-            deleteListOnServer(listId: (shoppingLists[i]).id.uuidString)
+            deleteShoppingListOnEndpoint(listId: (shoppingLists[i]).id.uuidString)
             //remove id from user defaults
             if let listIdIndex = listIds.firstIndex(of: shoppingLists[i].id.uuidString) {
                 listIds.remove(at: listIdIndex)
@@ -44,14 +46,13 @@ class ShoppingListStore: ObservableObject {
     }
     
     public func createShoppingList(shoppingList: ShoppingList) {
-        addListToServer(list: shoppingList)
+        createShoppingListOnEndpoint(list: shoppingList)
         shoppingLists.append(shoppingList)
         listIds.append(shoppingList.id.uuidString)
     }
     
-    // MARK: - Item actions
     public func addItemToShoppingList(item: Item, shoppingList: ShoppingList) {
-        addItemToServer(listId: shoppingList.id.uuidString, item: item)
+        addItemToShoppingListOnEndpoint(listId: shoppingList.id.uuidString, item: item)
         print("addItemToShoppingList\(item) \(shoppingList)")
         let idx = shoppingLists.firstIndex(of: shoppingList)
         self.shoppingLists[idx!].items.append(item)
@@ -61,7 +62,7 @@ class ShoppingListStore: ObservableObject {
     public func toggleBoughtStateofItem(item: Item, shoppingList:ShoppingList){
         let idx = shoppingLists.firstIndex(of: shoppingList)
         let list = self.shoppingLists[idx!]
-        if let itemIdx = list.items.firstIndex(of: item){
+        if let itemIdx = list.items.firstIndex(of: item) {
             list.items[itemIdx].bought.toggle()
         }
     }
@@ -70,16 +71,18 @@ class ShoppingListStore: ObservableObject {
         print("cleanUpBoughtItems \(shoppingList)")
     }
     
-    private func getListFromServer(listId: String) {
-        receiveDataFromEndpoint(url: "/v1/list/\(listId)/", body: nil, method: "GET")
+    // MARK: Endpoint Actions
+    
+    private func getShoppingListFromEndpoint(listId: String) {
+        receiveShoppingListFromEndpoint(url: "/v1/list/\(listId)/", body: nil, method: "GET")
     }
     
-    private func addItemToServer(listId: String, item: Item) {
+    private func addItemToShoppingListOnEndpoint(listId: String, item: Item) {
         let data = try! JSONEncoder().encode(item)
         sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "POST")
     }
     
-    private func addListToServer(list: ShoppingList) {
+    private func createShoppingListOnEndpoint(list: ShoppingList) {
         let body: [String: Any] = [
             "name": list.name,
             "icon": list.icon,
@@ -91,11 +94,11 @@ class ShoppingListStore: ObservableObject {
         sendRequestToEndpoint(url: "/v1/list/", data: data, method: "POST")
     }
     
-    private func deleteItemOnServer(itemId: String, listId: String) {
+    private func deleteShoppingListItemOnEndpoint(itemId: String, listId: String) {
         sendRequestToEndpoint(url: "/v1/item/\(listId)/\(itemId)", data: nil, method: "DELETE")
     }
     
-    private func deleteListOnServer(listId: String) {
+    private func deleteShoppingListOnEndpoint(listId: String) {
         sendRequestToEndpoint(url: "/v1/list/\(listId)/", data: nil, method: "DELETE")
     }
     
@@ -127,7 +130,7 @@ class ShoppingListStore: ObservableObject {
         task.resume()
     }
     
-    private func receiveDataFromEndpoint(url: String, body: Data!, method: String) {
+    private func receiveShoppingListFromEndpoint(url: String, body: Data!, method: String) {
         let endpoint = URL(string: ENDPOINT + url)!
         var request = URLRequest(url: endpoint)
     
