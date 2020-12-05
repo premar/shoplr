@@ -52,6 +52,27 @@ def new_item(list_id):
             return resp
 
 
+@application.route('/v1/item/<string:list_id>/', methods=['PUT'])
+def update_item(list_id):
+    if request.method == 'PUT':
+        shoplr_item = request.json
+        if request.headers['Authorization'] == application.config['API_KEY']:
+            data = shoplr_item
+            data['identifier'] = 'item'
+            client = MongoClient(application.config["DB_SERVER_URI"])
+            db = client[application.config["DB_NAME"]]
+            collection = db[list_id]
+            collection.delete_one({'id': data['id']})
+            collection.insert_one(data)
+            resp = jsonify({'message': '201 Updated!'})
+            resp.status_code = 201
+            return resp
+        else:
+            resp = jsonify({'message': '401 Unauthorized!'})
+            resp.status_code = 401
+            return resp
+
+
 @application.route('/v1/list/<string:list_id>/', methods=['GET'])
 def get_item(list_id):
     if request.method == 'GET':
