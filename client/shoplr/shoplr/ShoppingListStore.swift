@@ -10,7 +10,9 @@ import Foundation
 class ShoppingListStore: ObservableObject {
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
+    private let TIMER: Double = 60
     
+    private var timer: Timer?
     private var listIds: [String] {
         get {
             UserDefaults.standard.stringArray(forKey: "ShoppingListIds") ?? [String]()
@@ -19,12 +21,14 @@ class ShoppingListStore: ObservableObject {
             UserDefaults.standard.set(newValue,forKey: "ShoppingListIds")
         }
     }
-    
+        
     @Published var shoppingLists = [ShoppingList]()
     
     // MARK: Initialization
     
     init() {
+        timer = Timer.scheduledTimer(timeInterval: TIMER, target: self, selector: #selector(updateShoppingList), userInfo: nil, repeats: true)
+        
         listIds.forEach { id in
             print(id)
             getShoppingListFromEndpoint(listId: id)
@@ -77,6 +81,12 @@ class ShoppingListStore: ObservableObject {
                 let itemIdx = list.items.firstIndex(of: item)!
                 list.items.remove(at: itemIdx)
             }
+        }
+    }
+    
+    @objc private func updateShoppingList() {
+        listIds.forEach { id in
+            getShoppingListFromEndpoint(listId: id)
         }
     }
     
@@ -162,10 +172,18 @@ class ShoppingListStore: ObservableObject {
                 print(error)
             } else if let data = data {
                 print(data)
-                let list =  try? JSONDecoder().decode(ShoppingList.self, from: data)
+                let list = try? JSONDecoder().decode(ShoppingList.self, from: data)
                 DispatchQueue.main.async {
                     if (list != nil) {
-                        self.shoppingLists.append(list!)
+                        if let oldList = self.shoppingLists.filter({ $0.id == list?.id}).first {
+                            if (oldList != list) {
+                                let idx = self.shoppingLists.firstIndex(of: oldList)
+                                self.shoppingLists.remove(at: idx!)
+                                self.shoppingLists.append(list!)
+                            }
+                        } else {
+                            self.shoppingLists.append(list!)
+                        }
                     }
                 }
             } else {
