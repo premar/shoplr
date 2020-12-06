@@ -43,7 +43,7 @@ struct ContentView: View {
                                         Button(action: {
                                             self.isCreateModalPresented=true
                                         }) {
-                                            Image(systemName: "plus")
+                                            Image(systemName: "plus").imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
                                         }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {print("dismissed")
                                             self.isCreateModalPresented = false
                                         }) {

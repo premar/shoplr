@@ -45,7 +45,7 @@ struct ShoppingListView: View {
                     }
                 }
                 label: {
-                    Label("More", systemImage: "ellipsis")
+                    Label("More", systemImage: "ellipsis").imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
                 }
             }
         }
