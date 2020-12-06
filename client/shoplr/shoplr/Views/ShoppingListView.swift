@@ -13,6 +13,7 @@ struct ShoppingListView: View {
     
     @ObservedObject var shoppingList: ShoppingList
     @State private var isAddItemModalPresented: Bool = false
+    @State private var isShareModalPresented: Bool = false
     
     @State private var newItemName: String = ""
     
@@ -30,11 +31,19 @@ struct ShoppingListView: View {
             }) {
                 AddItemModalView(shoppingList: shoppingList)
             }
+            .sheet(isPresented: self.$isShareModalPresented,onDismiss: {print("dismissed")
+                self.isShareModalPresented = false
+            }) {
+                ShareModalView(listString: "www.google.com")
+            }
             createBottomButtonsView()
-        }.navigationBarTitle(shoppingList.name).toolbar {
+        }
+        .navigationBarTitle(shoppingList.name).toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
-                    Button(action: {}) {
+                    Button(action: {
+                        isShareModalPresented = true
+                    }) {
                         Label("Teilen", systemImage: "link")
                     }
                     
@@ -130,9 +139,6 @@ struct ItemRowView: View{
                     }.alert(isPresented: $showDateAlert, content: {
                         Alert(title: Text("Diesen Artikel brauche ich bis"), message: Text(item.expiryDate!,style: .date), dismissButton: .default(Text("Ok")))
                     }).imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
-                
-                
-                
             }
             
         }
