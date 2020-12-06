@@ -8,6 +8,9 @@
 import Foundation
 
 class ShoppingListStore: ObservableObject {
+    
+    static let sharedInstance = ShoppingListStore()
+    
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
     private let TIMER: Double = 60
@@ -26,7 +29,7 @@ class ShoppingListStore: ObservableObject {
     
     // MARK: Initialization
     
-    init() {
+    private init() {
         timer = Timer.scheduledTimer(timeInterval: TIMER, target: self, selector: #selector(updateShoppingList), userInfo: nil, repeats: true)
         
         listIds.forEach { id in
@@ -172,17 +175,17 @@ class ShoppingListStore: ObservableObject {
                 print(error)
             } else if let data = data {
                 print(data)
-                let list = try? JSONDecoder().decode(ShoppingList.self, from: data)
+                let list = try! JSONDecoder().decode(ShoppingList.self, from: data)
                 DispatchQueue.main.async {
                     if (list != nil) {
-                        if let oldList = self.shoppingLists.filter({ $0.id == list?.id}).first {
+                        if let oldList = self.shoppingLists.filter({ $0.id == list.id}).first {
                             if (oldList != list) {
                                 let idx = self.shoppingLists.firstIndex(of: oldList)
                                 self.shoppingLists.remove(at: idx!)
-                                self.shoppingLists.append(list!)
+                                self.shoppingLists.append(list)
                             }
                         } else {
-                            self.shoppingLists.append(list!)
+                            self.shoppingLists.append(list)
                         }
                     }
                 }

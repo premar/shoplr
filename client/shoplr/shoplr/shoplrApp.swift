@@ -11,7 +11,7 @@ import SwiftUI
 struct shoplrApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(ShoppingListStore())
+            ContentView().environmentObject(ShoppingListStore.sharedInstance)
         }
     }
 }

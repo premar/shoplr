@@ -15,11 +15,11 @@ class Item: ObservableObject,Identifiable, Hashable, Equatable, Codable {
     let specification: String
     //TODO do we also want icon on item?
     let icon: String
-    let expiryDate: Date
+    let expiryDate: Date?
     @Published
     var bought: Bool
     
-    init( name: String, specification: String, icon: String, expiryDate: Date, bought: Bool) {
+    init( name: String, specification: String, icon: String, expiryDate: Date?, bought: Bool) {
         self.name = name
         self.specification = specification
         self.icon = icon
@@ -34,7 +34,7 @@ class Item: ObservableObject,Identifiable, Hashable, Equatable, Codable {
         name = try values.decode(String.self, forKey: .name)
         icon = try values.decode(String.self, forKey: .icon)
         specification = try values.decode(String.self, forKey: .specification)
-        expiryDate = try values.decode(Date.self, forKey: .expiryDate)
+        expiryDate = try? values.decode(Date.self, forKey: .expiryDate)
         bought = try values.decode(Bool.self, forKey: .bought)
     }
     

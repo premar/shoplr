@@ -11,8 +11,7 @@ struct ShoppingListView: View {
     //@Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
     
-    @ObservedObject
-    var shoppingList: ShoppingList
+    @ObservedObject var shoppingList: ShoppingList
     @State private var isAddItemModalPresented: Bool = false
     
     @State private var newItemName: String = ""
@@ -29,7 +28,6 @@ struct ShoppingListView: View {
             }.sheet(isPresented: self.$isAddItemModalPresented,onDismiss: {print("dismissed")
                 self.isAddItemModalPresented = false
             }) {
-             //TODO modal doesn't appear properly
              AddItemModalView(shoppingList: shoppingList)
          }
             createBottomButtonsView()
@@ -50,7 +48,7 @@ struct ShoppingListView: View {
             }
         }
     }
-
+    
     private func addNewItemElementView() -> some View {
         HStack {
             Image(systemName: "circle.plus")
@@ -61,7 +59,7 @@ struct ShoppingListView: View {
                 }
             TextField("Artikel eingeben", text: $newItemName,
                       onCommit: {
-                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: Date(), bought: false),shoppingList: self.shoppingList)
+                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: nil, bought: false),shoppingList: self.shoppingList)
                         newItemName = ""
                       })
         }
@@ -98,32 +96,51 @@ struct ShoppingListView: View {
 struct ItemRowView: View{
     
     @EnvironmentObject var shoppingListStore: ShoppingListStore
-    @ObservedObject
-    var item: Item
+    @ObservedObject var item: Item
+    @State private var showDateAlert = false
+    
     let shoppingList: ShoppingList
+    
     var body: some View {
         HStack{
             Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
-                if item.bought{
-                    Label(
-                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
-                        icon: {Image(systemName: "checkmark.circle")}
-                    )
-                }
-                else{
-                    Label(
-                        title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")) },
-                        icon: {Image(systemName: "circle")}
-                    )
-                }
+                
+                    if item.bought{
+                        Label(
+                            title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
+                            icon: {Image(systemName: "checkmark.circle")}
+                        )
+                    }
+                    else{
+                        Label(
+                            title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")) },
+                            icon: {Image(systemName: "circle")}
+                        )
+                        
+                        
+                    }
+    
             })
+            Spacer()
+            if(item.expiryDate != nil){
+                
+                    Image(systemName:"clock").onTapGesture {
+                        showDateAlert = true
+                    }.alert(isPresented: $showDateAlert, content: {
+                        Alert(title: Text("Diesen Artikel brauche ich bis"), message: Text(item.expiryDate!,style: .date), dismissButton: .default(Text("Ok")))
+                    })
+                    
+               
+                
+            }
+            
         }
     }
     
 }
 struct ShoppingListView_Previews: PreviewProvider {
     static var previews: some View {
-        ShoppingListView(shoppingList: ShoppingListStore().shoppingLists[1])
+        ShoppingListView(shoppingList: ShoppingList( name: "Einkaufslsite", icon: "😃", items: [Item(name: "Artikel 1", specification: "1 ", icon: "", expiryDate: Date(), bought: false),Item(name: "Artikel 2", specification: "1", icon: "", expiryDate: nil, bought: false)]))
     }
 }
 
