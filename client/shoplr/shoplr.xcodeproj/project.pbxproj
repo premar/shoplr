@@ -14,10 +14,11 @@
 		A71C885E256F9D58009BECC1 /* ShoplrWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71C885A256F9D54009BECC1 /* ShoplrWidget.swift */; };
 		A71C8869256FA26A009BECC1 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7425630CD500107631 /* ShoppingList.swift */; };
 		A71C886C256FA271009BECC1 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7E2563C77700107631 /* Item.swift */; };
+		A73D2682257EC45200B92DAC /* ShoppingListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73D2681257EC45200B92DAC /* ShoppingListService.swift */; };
+		A73D2683257EC45300B92DAC /* ShoppingListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73D2681257EC45200B92DAC /* ShoppingListService.swift */; };
+		A74C2842257D259000DEAEA5 /* ShareModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C2841257D259000DEAEA5 /* ShareModalView.swift */; };
 		A74C284E257D695200DEAEA5 /* ItemListWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C284D257D695200DEAEA5 /* ItemListWidgetView.swift */; };
 		A74C2853257D695800DEAEA5 /* ShoplrWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C2847257D691B00DEAEA5 /* ShoplrWidgetEntryView.swift */; };
-		A75215AF257402B500A4533B /* ShoppingListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC7625630E3F00107631 /* ShoppingListStore.swift */; };
-		A74C2842257D259000DEAEA5 /* ShareModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74C2841257D259000DEAEA5 /* ShareModalView.swift */; };
 		A780DC662562F95000107631 /* shoplrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC652562F95000107631 /* shoplrApp.swift */; };
 		A780DC682562F95000107631 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780DC672562F95000107631 /* ContentView.swift */; };
 		A780DC6A2562F95400107631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A780DC692562F95400107631 /* Assets.xcassets */; };
@@ -55,18 +56,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-
 		A71C8837256F99D0009BECC1 /* ShoplrWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShoplrWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71C8839256F99D0009BECC1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A71C883B256F99D0009BECC1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A71C8840256F99D4009BECC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A71C8842256F99D4009BECC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A71C885A256F9D54009BECC1 /* ShoplrWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoplrWidget.swift; sourceTree = "<group>"; };
+		A73D2681257EC45200B92DAC /* ShoppingListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListService.swift; sourceTree = "<group>"; };
+		A74C2841257D259000DEAEA5 /* ShareModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareModalView.swift; sourceTree = "<group>"; };
 		A74C2847257D691B00DEAEA5 /* ShoplrWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoplrWidgetEntryView.swift; sourceTree = "<group>"; };
 		A74C284D257D695200DEAEA5 /* ItemListWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListWidgetView.swift; sourceTree = "<group>"; };
 		A75215CB2576803000A4533B /* shoplr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shoplr.entitlements; sourceTree = "<group>"; };
 		A75215D42576808900A4533B /* ShoplrWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoplrWidgetExtension.entitlements; sourceTree = "<group>"; };
-		A74C2841257D259000DEAEA5 /* ShareModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareModalView.swift; sourceTree = "<group>"; };
 		A780DC622562F95000107631 /* shoplr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shoplr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A780DC652562F95000107631 /* shoplrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shoplrApp.swift; sourceTree = "<group>"; };
 		A780DC672562F95000107631 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -179,6 +180,7 @@
 				7F2865F4256C1DB60038ED51 /* Models */,
 				A780DC652562F95000107631 /* shoplrApp.swift */,
 				A780DC7625630E3F00107631 /* ShoppingListStore.swift */,
+				A73D2681257EC45200B92DAC /* ShoppingListService.swift */,
 				A780DC6E2562F95400107631 /* Info.plist */,
 				A780DC692562F95400107631 /* Assets.xcassets */,
 				A780DC6B2562F95400107631 /* Preview Content */,
@@ -300,9 +302,9 @@
 				A74C284E257D695200DEAEA5 /* ItemListWidgetView.swift in Sources */,
 				A74C2853257D695800DEAEA5 /* ShoplrWidgetEntryView.swift in Sources */,
 				A71C885E256F9D58009BECC1 /* ShoplrWidget.swift in Sources */,
+				A73D2683257EC45300B92DAC /* ShoppingListService.swift in Sources */,
 				A71C886C256FA271009BECC1 /* Item.swift in Sources */,
 				A71C8869256FA26A009BECC1 /* ShoppingList.swift in Sources */,
-				A75215AF257402B500A4533B /* ShoppingListStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +319,7 @@
 				A780DC7F2563C77700107631 /* Item.swift in Sources */,
 				A780DC7725630E3F00107631 /* ShoppingListStore.swift in Sources */,
 				A780DC7D25631CF300107631 /* AddItemModalView.swift in Sources */,
+				A73D2682257EC45200B92DAC /* ShoppingListService.swift in Sources */,
 				A780DC662562F95000107631 /* shoplrApp.swift in Sources */,
 				A74C2842257D259000DEAEA5 /* ShareModalView.swift in Sources */,
 			);

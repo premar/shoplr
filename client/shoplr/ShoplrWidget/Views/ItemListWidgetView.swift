@@ -37,7 +37,7 @@ struct ItemListWidgetView: View {
                         ForEach(4..<items.count) { index in
                             Label(
                                 title: { Text(items[index].name).fontWeight(.light) },
-                                icon: { Image(systemName: "circle") }
+                                icon: { Image(systemName: "circle").scaleEffect(0.5) }
                             )
                             
                         }
@@ -49,7 +49,7 @@ struct ItemListWidgetView: View {
                     ForEach(items) { item in
                         Label(
                             title: { Text(item.name).fontWeight(.light) },
-                            icon: { Image(systemName: "circle") }
+                            icon: { Image(systemName: "circle").scaleEffect(0.5) }
                         )
                         
                     }
