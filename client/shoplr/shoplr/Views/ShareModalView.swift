@@ -16,10 +16,11 @@ struct ShareModalView: View {
 
     var body: some View {
         HStack{
-            Image(uiImage: generateQRCode(from:listString)).resizable()
+            Image(uiImage: generateQRCode(from:listString)).resizable().scaledToFit()
                 .frame(width: 299, height: 299)
         }
     }
+    
     func generateQRCode(from string: String) -> UIImage {
         let context = CIContext()
         let filter = CIFilter.qrCodeGenerator()
@@ -27,7 +28,10 @@ struct ShareModalView: View {
         filter.setValue(data, forKey: "inputMessage")
 
         if let outputImage = filter.outputImage {
-            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            let transform = CGAffineTransform(scaleX: 10, y: 10)
+            let scaledQrImage = outputImage.transformed(by: transform)
+            if let cgimg = context.createCGImage(scaledQrImage, from: scaledQrImage.extent) {
+                
                 return UIImage(cgImage: cgimg)
             }
         }
