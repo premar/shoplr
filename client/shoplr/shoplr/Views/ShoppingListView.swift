@@ -34,7 +34,7 @@ struct ShoppingListView: View {
             .sheet(isPresented: self.$isShareModalPresented,onDismiss: {print("dismissed")
                 self.isShareModalPresented = false
             }) {
-                ShareModalView(listString: "www.google.com")
+                ShareModalView(listString: "shoplr://" + shoppingList.id.uuidString)
             }
             createBottomButtonsView()
         }
@@ -45,10 +45,6 @@ struct ShoppingListView: View {
                         isShareModalPresented = true
                     }) {
                         Label("Teilen", systemImage: "link")
-                    }
-                    
-                    Button(action: {}) {
-                        Label("Löschen", systemImage: "trash")
                     }
                 }
                 label: {

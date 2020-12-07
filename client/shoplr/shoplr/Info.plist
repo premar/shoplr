@@ -25,6 +25,17 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
 	</dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>ch.hslu.ios.team1.shoplr</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>shoplr</string>
+            </array>
+        </dict>
+    </array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchScreen</key>
