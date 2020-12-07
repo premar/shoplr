@@ -133,7 +133,7 @@ class ShoppingListStore: ObservableObject {
     }
     
     private func deleteShoppingListItemOnEndpoint(itemId: String, listId: String) {
-        sendRequestToEndpoint(url: "/v1/item/\(listId)/\(itemId)", data: nil, method: "DELETE")
+        sendRequestToEndpoint(url: "/v1/item/\(listId)/\(itemId)/", data: nil, method: "DELETE")
     }
     
     private func deleteShoppingListOnEndpoint(listId: String) {
