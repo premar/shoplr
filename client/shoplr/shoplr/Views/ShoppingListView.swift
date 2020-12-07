@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ShoppingListView: View {
-    //@Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shoppingListStore: ShoppingListStore
     
     @ObservedObject var shoppingList: ShoppingList
-    @State private var isAddItemModalPresented: Bool = false
-    @State private var isShareModalPresented: Bool = false
+    
+    @State var activeSheet: ActiveSheet?
     
     @State private var newItemName: String = ""
     
@@ -26,15 +26,13 @@ struct ShoppingListView: View {
                     }
                     addNewItemElementView()
                 }
-            }.sheet(isPresented: self.$isAddItemModalPresented,onDismiss: {print("dismissed")
-                self.isAddItemModalPresented = false
-            }) {
-                AddItemModalView(shoppingList: shoppingList)
-            }
-            .sheet(isPresented: self.$isShareModalPresented,onDismiss: {print("dismissed")
-                self.isShareModalPresented = false
-            }) {
-                ShareModalView(listString: "shoplr://" + shoppingList.id.uuidString)
+            }.sheet(item: $activeSheet,onDismiss: {activeSheet = nil}) { item in
+                switch item {
+                case .addItemModal:
+                    AddItemModalView(shoppingList: shoppingList)
+                case .shareModal:
+                    ShareModalView(listString: "shoplr://" + shoppingList.id.uuidString)
+                }
             }
             createBottomButtonsView()
         }
@@ -42,7 +40,7 @@ struct ShoppingListView: View {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button(action: {
-                        isShareModalPresented = true
+                        activeSheet = .shareModal
                     }) {
                         Label("Teilen", systemImage: "link")
                     }
@@ -81,7 +79,7 @@ struct ShoppingListView: View {
             .background(Color.red)
             .cornerRadius(40)
             
-            Button(action: {self.isAddItemModalPresented=true}) {
+            Button(action: {activeSheet = .addItemModal}) {
                 Label(
                     title: { Text("Neuer Artikel").fontWeight(.bold) },
                     icon: { Image(systemName: "plus.circle.fill") }
@@ -134,7 +132,7 @@ struct ItemRowView: View{
                         showDateAlert = true
                     }.alert(isPresented: $showDateAlert, content: {
                         Alert(title: Text("Diesen Artikel brauche ich bis"), message: Text(item.expiryDate!,style: .date), dismissButton: .default(Text("Ok")))
-                    }).imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
+                    }).imageScale(.large).frame(width: 70, alignment: .trailing)
             }
             
         }
@@ -147,3 +145,10 @@ struct ShoppingListView_Previews: PreviewProvider {
     }
 }
 
+enum ActiveSheet: Identifiable {
+    case addItemModal, shareModal
+    
+    var id: Int {
+        hashValue
+    }
+}

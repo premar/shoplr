@@ -64,6 +64,11 @@ class ShoppingListStore: ObservableObject {
         listIds.append(shoppingList.id.uuidString)
     }
     
+    public func addShoppingListId(id: String){
+        listIds.append(id)
+        getShoppingListFromEndpoint(listId: id)
+    }
+    
     public func addItemToShoppingList(item: Item, shoppingList: ShoppingList) {
         addItemToShoppingListOnEndpoint(listId: shoppingList.id.uuidString, item: item)
         print("addItemToShoppingList\(item) \(shoppingList)")
