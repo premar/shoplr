@@ -37,41 +37,31 @@ struct ShoppingListView: View {
             createBottomButtonsView()
         }
         .navigationBarTitle(shoppingList.name).toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Menu {
-                    Button(action: {
-                        activeSheet = .shareModal
-                    }) {
-                        Label("Teilen", systemImage: "link")
-                    }
-                }
-                label: {
-                    Label("More", systemImage: "ellipsis").imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
-                }
+            Button(action: {
+                activeSheet = .shareModal
+            }) {
+                Label("Teilen", systemImage: "square.and.arrow.up")
             }
         }
     }
     
     private func addNewItemElementView() -> some View {
         HStack {
-            Image(systemName: "circle.plus")
-                .resizable()
-                .frame(width: 20, height: 20)
-                .onTapGesture {
-                    print("onTapGesture")
-                }
-            TextField("Artikel eingeben", text: $newItemName,
-                      onCommit: {
-                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: nil, bought: false),shoppingList: self.shoppingList)
-                        newItemName = ""
-                      })
+            Label(
+                title: {  TextField("Artikel eingeben", text: $newItemName,
+                                    onCommit: {
+                                        shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: nil, bought: false),shoppingList: self.shoppingList)
+                                        newItemName = ""
+                                    })},
+                icon: { Image(systemName: "plus.circle").foregroundColor(.gray) }
+            )    
         }
     }
     private func createBottomButtonsView() -> some View {
         HStack {
             Button(action: { shoppingListStore.cleanUpBoughtItems(shoppingList: self.shoppingList) }) {
                 Label(
-                    title: { Text("Clean Up").fontWeight(.bold) },
+                    title: { Text("Aufräumen").fontWeight(.bold) },
                     icon: { Image(systemName: "trash") }
                 )
             }.frame(maxWidth: .infinity)
@@ -84,7 +74,6 @@ struct ShoppingListView: View {
                     title: { Text("Neuer Artikel").fontWeight(.bold) },
                     icon: { Image(systemName: "plus.circle.fill") }
                 )
-                
             }
             .frame(height: 50)
             .frame(maxWidth: .infinity)
@@ -107,7 +96,6 @@ struct ItemRowView: View{
     var body: some View {
         HStack{
             Button(action: {shoppingListStore.toggleBoughtStateofItem(item: item, shoppingList: shoppingList)}, label: {
-                
                 if item.bought{
                     Label(
                         title: { Text(item.name + (item.specification.isEmpty ?  "":"("+item.specification + ")")).strikethrough() },
@@ -123,7 +111,7 @@ struct ItemRowView: View{
                     
                 }
                 
-            })
+            }).foregroundColor(.black)
             Spacer()
             if(item.expiryDate != nil){
                 
@@ -139,16 +127,16 @@ struct ItemRowView: View{
     }
     
 }
-struct ShoppingListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShoppingListView(shoppingList: ShoppingList( name: "Einkaufslsite", icon: "😃", items: [Item(name: "Artikel 1", specification: "1 ", icon: "", expiryDate: Date(), bought: false),Item(name: "Artikel 2", specification: "1", icon: "", expiryDate: nil, bought: false)]))
-    }
-}
-
 enum ActiveSheet: Identifiable {
     case addItemModal, shareModal
     
     var id: Int {
         hashValue
+    }
+}
+
+struct ShoppingListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ShoppingListView(shoppingList: ShoppingList( name: "Einkaufslsite", icon: "😃", items: [Item(name: "Artikel 1", specification: "1 ", icon: "", expiryDate: Date(), bought: false),Item(name: "Artikel 2", specification: "1", icon: "", expiryDate: nil, bought: false)]))
     }
 }

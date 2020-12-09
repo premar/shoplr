@@ -36,17 +36,16 @@ class ShoppingListStore: ObservableObject {
                                      userInfo: nil, repeats: true)
         listIds.forEach { id in
             print(id)
-            service.getShoppingListFromEndpoint(listId: id){list in
-                self.updateShoppingList(list:list)
+            service.getShoppingListFromEndpoint(listId: id){shoppingList in
+                self.updateShoppingList(shoppingList:shoppingList)
             }
         }
     }
     
     // MARK: ShoppingList / Item Actions
     
-    public func deleteShoppingList(index: IndexSet) {
-        // TODO: Rename index to indexSet, because it can hold more than one index
-        for i in index {
+    public func deleteShoppingList(indexSet: IndexSet) {
+        for i in indexSet {
             service.deleteShoppingListOnEndpoint(listId: (shoppingLists[i]).id.uuidString)
             // remove id from user defaults
             if let listIdIndex = listIds.firstIndex(of: shoppingLists[i].id.uuidString) {
@@ -54,7 +53,7 @@ class ShoppingListStore: ObservableObject {
                 userDefaults?.setValue(listIds, forKey: "ShoppingListIds")
             }
         }
-        shoppingLists.remove(atOffsets: index)
+        shoppingLists.remove(atOffsets: indexSet)
     }
     
     public func createShoppingList(shoppingList: ShoppingList) {
@@ -66,17 +65,16 @@ class ShoppingListStore: ObservableObject {
     
     public func addShoppingListId(id: String){
         listIds.append(id)
-        service.getShoppingListFromEndpoint(listId: id){list in
-            self.updateShoppingList(list: list)
+        service.getShoppingListFromEndpoint(listId: id){shoppingList in
+            self.updateShoppingList(shoppingList: shoppingList)
+            
         }
     }
     
     public func addItemToShoppingList(item: Item, shoppingList: ShoppingList) {
         service.addItemToShoppingListOnEndpoint(listId: shoppingList.id.uuidString, item: item)
-        print("addItemToShoppingList\(item) \(shoppingList)")
         let idx = shoppingLists.firstIndex(of: shoppingList)
         self.shoppingLists[idx!].items.append(item)
-        print(self.shoppingLists[idx!].items)
     }
     
     public func toggleBoughtStateofItem(item: Item, shoppingList: ShoppingList){
@@ -103,22 +101,22 @@ class ShoppingListStore: ObservableObject {
     @objc private func refreshShoppingList() {
         listIds.forEach { id in
             service.getShoppingListFromEndpoint(listId: id){list in
-                self.updateShoppingList(list: list)
+                self.updateShoppingList(shoppingList: list)
             }
             
         }
     }
     
-    private func updateShoppingList(list: ShoppingList){
+    private func updateShoppingList(shoppingList: ShoppingList){
         DispatchQueue.main.async {
-            if let oldList = self.shoppingLists.filter({ $0.id == list.id}).first {
-                if (oldList != list) {
+            if let oldList = self.shoppingLists.filter({ $0.id == shoppingList.id}).first {
+                if (oldList != shoppingList) {
                     let idx = self.shoppingLists.firstIndex(of: oldList)
                     self.shoppingLists.remove(at: idx!)
-                    self.shoppingLists.append(list)
+                    self.shoppingLists.append(shoppingList)
                 }
             } else {
-                self.shoppingLists.append(list)
+                self.shoppingLists.append(shoppingList)
             }
         }
     }

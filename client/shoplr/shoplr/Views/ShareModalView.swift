@@ -15,9 +15,14 @@ struct ShareModalView: View {
     var listString : String
 
     var body: some View {
-        HStack{
+        VStack{
+            Text("Zeige einfach diesen Code deinem Kollege!").font(.title).multilineTextAlignment(.center)
             Image(uiImage: generateQRCode(from:listString)).resizable().scaledToFit()
                 .frame(width: 299, height: 299)
+            Text("oder sende ihm diesen Link:")
+            Button(listString, action:{
+                UIPasteboard.general.string = listString
+            }).font(.footnote)
         }
     }
     

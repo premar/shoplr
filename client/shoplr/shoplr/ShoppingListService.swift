@@ -23,18 +23,16 @@ final class ShoppingListService {
     }
     
     public  func addItemToShoppingListOnEndpoint(listId: String, item: Item) {
-        //TODO change to ?
-        let data = try! JSONEncoder().encode(item)
+        let data = try? JSONEncoder().encode(item)
         sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "POST")
     }
     
-    public  func updateShoppingListItemOnEndpoint(listId: String, item: Item) {
-        //TODO change to ?
-        let data = try! JSONEncoder().encode(item)
+    public func updateShoppingListItemOnEndpoint(listId: String, item: Item) {
+        let data = try? JSONEncoder().encode(item)
         sendRequestToEndpoint(url: "/v1/item/\(listId)/", data: data, method: "PUT")
     }
     
-    public  func createShoppingListOnEndpoint(list: ShoppingList) {
+    public func createShoppingListOnEndpoint(list: ShoppingList) {
         let body: [String: Any] = [
             "name": list.name,
             "icon": list.icon,
@@ -46,11 +44,11 @@ final class ShoppingListService {
         sendRequestToEndpoint(url: "/v1/list/", data: data, method: "POST")
     }
     
-    public  func deleteShoppingListItemOnEndpoint(itemId: String, listId: String) {
+    public func deleteShoppingListItemOnEndpoint(itemId: String, listId: String) {
         sendRequestToEndpoint(url: "/v1/item/\(listId)/\(itemId)/", data: nil, method: "DELETE")
     }
     
-    public  func deleteShoppingListOnEndpoint(listId: String) {
+    public func deleteShoppingListOnEndpoint(listId: String) {
         sendRequestToEndpoint(url: "/v1/list/\(listId)/", data: nil, method: "DELETE")
     }
     
@@ -69,13 +67,11 @@ final class ShoppingListService {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                // TODO: handle error
                 print(error)
             } else if let data = data {
                 print(data)
             } else {
-                // TODO: handle exception
-                print("Exception")
+                print("Exception in sendRequestToEndpoint")
             }
         }
         task.resume()
@@ -99,13 +95,10 @@ final class ShoppingListService {
                 // TODO: handle error
                 print(error)
             } else if let data = data {
-                print(data)
-                //TODO change to ?
-                let list = try! JSONDecoder().decode(ShoppingList.self, from: data)
-                completion(list)
+                let list = try? JSONDecoder().decode(ShoppingList.self, from: data)
+                if let list = list {completion(list)}
             } else {
-                // TODO: handle exception
-                print("Exception")
+                print("Exception in receiveShoppingListFromEndpoint")
             }
         }
         task.resume()

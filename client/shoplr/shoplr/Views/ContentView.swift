@@ -21,17 +21,10 @@ struct ContentView: View {
                 List{
                     ForEach(shoppingLists){list in
                         NavigationLink(destination: ShoppingListView(shoppingList: list)){
-                            
                             Label(
                                 title: { Text(list.name) },
                                 icon: { Text(list.icon) }
-                            ).contextMenu {
-                                Button(action: {print("Share")}) {
-                                    Text("Teilen")
-                                    Image(systemName: "square.and.arrow.up")
-                                }
-                            }
-                            
+                            )
                         }
                     }.onDelete(perform: onDelete)
                     .onMove(perform: onMove)
@@ -44,7 +37,7 @@ struct ContentView: View {
                                             self.isCreateModalPresented=true
                                         }) {
                                             Image(systemName: "plus").imageScale(.large).frame(width: 70, height: 70, alignment: .trailing)
-                                        }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {print("dismissed")
+                                        }.sheet(isPresented: self.$isCreateModalPresented, onDismiss: {
                                             self.isCreateModalPresented = false
                                         }) {
                                             CreateListModalView()
@@ -55,10 +48,9 @@ struct ContentView: View {
         }
     }
     private func onDelete(offsets: IndexSet) {
-        shoppingListStore.deleteShoppingList(index: offsets)
+        shoppingListStore.deleteShoppingList(indexSet: offsets)
     }
     
-    //TODO how to handle with server side communication
     private func onMove(source: IndexSet, destination: Int) {
         shoppingListStore.shoppingLists.move(fromOffsets: source, toOffset: destination)
         

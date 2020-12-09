@@ -21,7 +21,6 @@ class ShoppingList: ObservableObject, Identifiable, Hashable, Equatable, Codable
         self.id  = UUID()
     }
     
-    //TODO only used for debugging
     init(name: String, icon: String , items: [Item]) {
         self.name = name
         self.icon = icon

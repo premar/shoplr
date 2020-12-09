@@ -14,7 +14,6 @@ struct Provider: TimelineProvider {
     
     private var listIds: [String]{
         get{
-            // UserDefaults.standard.stringArray(forKey: "ShoppingListIds") ?? [String]()
             let userDefaults = UserDefaults(suiteName: "group.ch.hslu.ios.team1.shoplr")
             return userDefaults?.array(forKey: "ShoppingListIds") as? [String] ?? [String]()
         }
@@ -32,19 +31,12 @@ struct Provider: TimelineProvider {
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<ShoplrWidgetEntry>) -> ()) {
         var entries: [ShoplrWidgetEntry] = []
-        listIds.forEach({id in print(id)})
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        
         for (index, id) in listIds.enumerated() {
-            let entryDate = Calendar.current.date(byAdding: .minute, value: index+1, to: currentDate)!
-            //list = receiveDataFromEndpoint(url: "/v1/list/\(id)/", body: nil, method: "GET")
-            print("should now call")
+            let entryDate = Calendar.current.date(byAdding: .hour, value: index+1, to: currentDate)!
             service.getShoppingListFromEndpoint(listId: id){ (shoppingList) in
-                print("hi: " + shoppingList.name)
-                let entry = ShoplrWidgetEntry(date: entryDate, shoppingList: shoppingList)
-                entries.append(entry)
-
+               let entry = ShoplrWidgetEntry(date: entryDate, shoppingList: shoppingList)
+               entries.append(entry)
             }
         }
         //TODO fix waiting 
@@ -56,11 +48,11 @@ struct Provider: TimelineProvider {
         completion(timeline)
     }
 }
+
 struct ShoplrWidgetEntry: TimelineEntry {
     let date: Date
     var shoppingList: ShoppingList
 }
-
 
 @main
 struct ShoplrWidget: Widget {
