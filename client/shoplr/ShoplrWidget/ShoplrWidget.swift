@@ -39,13 +39,14 @@ struct Provider: TimelineProvider {
                entries.append(entry)
             }
         }
-        //TODO fix waiting 
-        while(entries.count < 1){
-            print("waiting")
-            print(entries)
+        
+        //not optimal: but waiting for 2 seconds to give time for the entries to populate before calling
+        //             the completion handler
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            let timeline = Timeline(entries: entries, policy: .atEnd)
+            completion(timeline)
         }
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        
     }
 }
 

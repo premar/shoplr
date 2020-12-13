@@ -15,8 +15,8 @@ struct ItemListWidgetView: View {
                 VStack(alignment:.leading){
                     
                     ForEach(0..<4) { index in
-                        HStack(spacing:0) {Image(systemName: "circle").scaleEffect(0.5)
-                            Text(items[index].name).fontWeight(.light)
+                        HStack(spacing:0) {
+                            ItemWithLabelView(item: items[index])
                         }
                     }
                     
@@ -25,9 +25,8 @@ struct ItemListWidgetView: View {
                     
                     if(items.count>8){
                         ForEach(4..<7) { index in
-                            
-                            HStack(spacing:0) {Image(systemName: "circle").scaleEffect(0.5)
-                                Text(items[index].name).fontWeight(.light)
+                            HStack(spacing:0) {
+                                ItemWithLabelView(item: items[index])
                             }
                             
                         }
@@ -35,11 +34,7 @@ struct ItemListWidgetView: View {
                         
                     }else{
                         ForEach(4..<items.count) { index in
-                            Label(
-                                title: { Text(items[index].name).fontWeight(.light) },
-                                icon: { Image(systemName: "circle").scaleEffect(0.5) }
-                            )
-                            
+                            ItemWithLabelView(item: items[index])
                         }
                     }
                 }
@@ -47,11 +42,7 @@ struct ItemListWidgetView: View {
                 VStack(alignment:.leading){
                     
                     ForEach(items) { item in
-                        Label(
-                            title: { Text(item.name).fontWeight(.light) },
-                            icon: { Image(systemName: "circle").scaleEffect(0.5) }
-                        )
-                        
+                        ItemWithLabelView(item: item)
                     }
                     
                 }
@@ -61,6 +52,23 @@ struct ItemListWidgetView: View {
     }
 }
 
+struct ItemWithLabelView: View {
+    let item: Item
+    var body: some View {
+        if item.bought {
+        Label(
+            title: { Text(item.name).fontWeight(.light).strikethrough() },
+            icon: {Image(systemName: "checkmark.circle").scaleEffect(0.5) }
+        )
+        }else {
+            Label(
+                title: { Text(item.name).fontWeight(.light) },
+                icon: {Image(systemName: "circle").scaleEffect(0.5) }
+            )
+        }
+    }
+    
+}
 struct ItemListWidgetView_Previews: PreviewProvider {
     static var previews: some View {
         ItemListWidgetView(items:[

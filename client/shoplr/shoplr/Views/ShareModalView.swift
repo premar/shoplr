@@ -16,13 +16,16 @@ struct ShareModalView: View {
 
     var body: some View {
         VStack{
-            Text("Zeige einfach diesen Code deinem Kollege!").font(.title).multilineTextAlignment(.center)
+            Text("Zeige einfach diesen QR Code").font(.title).multilineTextAlignment(.center)
             Image(uiImage: generateQRCode(from:listString)).resizable().scaledToFit()
                 .frame(width: 299, height: 299)
-            Text("oder sende ihm diesen Link:")
+            Text("oder teile diesen Link:")
+            HStack{
             Button(listString, action:{
                 UIPasteboard.general.string = listString
             }).font(.footnote)
+                Image(systemName: "doc.on.clipboard").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            }
         }
     }
     
