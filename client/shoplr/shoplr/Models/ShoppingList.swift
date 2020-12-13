@@ -9,9 +9,11 @@ import Foundation
 
 
 class ShoppingList: ObservableObject, Identifiable, Hashable, Equatable, Codable{
+    
     let id: UUID
     let name: String
     let icon: String
+    
     @Published
     var items = [Item]()
     
@@ -34,6 +36,7 @@ class ShoppingList: ObservableObject, Identifiable, Hashable, Equatable, Codable
         self.items = items
         self.id = id
     }
+    
     //MARK: - Protocol Overrides
     //needed to implement required init to conform to Decodable while still using @Published
     required init(from decoder: Decoder) throws {
@@ -44,6 +47,7 @@ class ShoppingList: ObservableObject, Identifiable, Hashable, Equatable, Codable
         items = try values.decode([Item].self, forKey: .items)
        
     }
+    
     //needed to implement encode to conform to Encodable while still using @Published
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -52,12 +56,14 @@ class ShoppingList: ObservableObject, Identifiable, Hashable, Equatable, Codable
         try container.encode(icon, forKey: .icon)
         try container.encode(items, forKey: .items)
     }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case icon
         case items
     }
+    
     static func == (lhs: ShoppingList, rhs: ShoppingList) -> Bool {
         lhs.name==rhs.name && lhs.id == rhs.id && lhs.icon == rhs.icon && lhs.items == rhs.items
     }

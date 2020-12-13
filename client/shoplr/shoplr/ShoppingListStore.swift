@@ -47,7 +47,6 @@ class ShoppingListStore: ObservableObject {
     public func deleteShoppingList(indexSet: IndexSet) {
         for i in indexSet {
             service.deleteShoppingListOnEndpoint(listId: (shoppingLists[i]).id.uuidString)
-            // remove id from user defaults
             if let listIdIndex = listIds.firstIndex(of: shoppingLists[i].id.uuidString) {
                 listIds.remove(at: listIdIndex)
                 userDefaults?.setValue(listIds, forKey: "ShoppingListIds")
@@ -63,7 +62,7 @@ class ShoppingListStore: ObservableObject {
         userDefaults?.setValue(listIds, forKey: "ShoppingListIds")
     }
     
-    public func addShoppingListId(id: String){
+    public func addShoppingListId(id: String) {
         listIds.append(id)
         service.getShoppingListFromEndpoint(listId: id){shoppingList in
             self.updateShoppingList(shoppingList: shoppingList)
@@ -107,7 +106,7 @@ class ShoppingListStore: ObservableObject {
         }
     }
     
-    private func updateShoppingList(shoppingList: ShoppingList){
+    private func updateShoppingList(shoppingList: ShoppingList) {
         DispatchQueue.main.async {
             if let oldList = self.shoppingLists.filter({ $0.id == shoppingList.id}).first {
                 if (oldList != shoppingList) {

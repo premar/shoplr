@@ -14,6 +14,7 @@ class Item: ObservableObject,Identifiable, Hashable, Equatable, Codable {
     let name: String
     let specification: String
     let expiryDate: Date?
+    
     @Published
     var bought: Bool
     
@@ -23,6 +24,7 @@ class Item: ObservableObject,Identifiable, Hashable, Equatable, Codable {
         self.expiryDate = expiryDate
         self.bought = bought
     }
+    
     //MARK: - Protocol Overrides
     //needed to implement required init to conform to Decodable while still using @Published
     required init(from decoder: Decoder) throws {
@@ -55,6 +57,7 @@ class Item: ObservableObject,Identifiable, Hashable, Equatable, Codable {
         try container.encode(expiryDate, forKey: .expiryDate)
         try container.encode(bought, forKey: .bought)
     }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name

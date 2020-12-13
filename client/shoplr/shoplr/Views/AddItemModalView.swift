@@ -20,8 +20,8 @@ struct AddItemModalView: View {
     
     var shoppingList: ShoppingList
     var body: some View {
-        NavigationView{
-            Form{
+        NavigationView {
+            Form {
                 VStack(alignment: .leading) {
                     TextField("Listen Name" ,text: $itemName).textFieldStyle(RoundedBorderTextFieldStyle())
                     TextField("Specification" ,text: $specification).textFieldStyle(RoundedBorderTextFieldStyle())
@@ -43,14 +43,17 @@ struct AddItemModalView: View {
                                             })
             }}
     }
-    private func addItemToShoppingList(){
+    private func addItemToShoppingList() {
         var tmpDate: Date?
-        if(!dateWasChanged){
+        
+        if(!dateWasChanged) {
             tmpDate = nil
-        }else {
+        } else {
             tmpDate = self.validUntil
         }
+        
         shoppingListStore.addItemToShoppingList(item: Item(name: self.itemName, specification: self.specification, icon: "", expiryDate: tmpDate, bought: false), shoppingList: self.shoppingList)
+        
         self.presentationMode.wrappedValue.dismiss()
     }
 }

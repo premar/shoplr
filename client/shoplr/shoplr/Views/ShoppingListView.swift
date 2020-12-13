@@ -48,7 +48,7 @@ struct ShoppingListView: View {
     private func addNewItemElementView() -> some View {
         HStack {
             Label(
-                title: {  TextField("Artikel eingeben", text: $newItemName,
+                title: { TextField("Artikel eingeben", text: $newItemName,
                                     onCommit: {
                                         shoppingListStore.addItemToShoppingList(item: Item(name: newItemName, specification: "", icon: "", expiryDate: nil, bought: false),shoppingList: self.shoppingList)
                                         newItemName = ""
@@ -85,6 +85,7 @@ struct ShoppingListView: View {
         .padding()
     }
 }
+
 struct ItemRowView: View{
     
     @EnvironmentObject var shoppingListStore: ShoppingListStore
@@ -127,6 +128,7 @@ struct ItemRowView: View{
     }
     
 }
+
 enum ActiveSheet: Identifiable {
     case addItemModal, shareModal
     

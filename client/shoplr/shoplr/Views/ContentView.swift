@@ -17,10 +17,10 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            if let shoppingLists = shoppingListStore.shoppingLists{
-                List{
-                    ForEach(shoppingLists){list in
-                        NavigationLink(destination: ShoppingListView(shoppingList: list)){
+            if let shoppingLists = shoppingListStore.shoppingLists {
+                List {
+                    ForEach(shoppingLists) { list in
+                        NavigationLink(destination: ShoppingListView(shoppingList: list)) {
                             Label(
                                 title: { Text(list.name) },
                                 icon: { Text(list.icon) }
@@ -47,6 +47,7 @@ struct ContentView: View {
             }
         }
     }
+    
     private func onDelete(offsets: IndexSet) {
         shoppingListStore.deleteShoppingList(indexSet: offsets)
     }

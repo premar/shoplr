@@ -15,11 +15,12 @@ struct CreateListModalView: View {
     @State private var listName: String = ""
     @State private var selectIcon = 0
     
-    let icons = ["🏠","❤️","😃","📚","🍺","🎷"]
+    private let icons = ["🏠","❤️","😃","📚","🍺","🎷"]
+    
     var body: some View {
         
-        NavigationView{
-            Form{
+        NavigationView {
+            Form {
                 VStack(alignment: .leading) {
                     TextField("Listen Name" ,text: $listName).textFieldStyle(RoundedBorderTextFieldStyle())
                     Picker(selection: $selectIcon, label: Text("Wähle ein Icon aus")) {
@@ -41,11 +42,13 @@ struct CreateListModalView: View {
             }
         }
     }
-    private func addNewList(){
+    
+    private func addNewList() {
         self.presentationMode.wrappedValue.dismiss()
         shoppingListStore.createShoppingList(shoppingList: ShoppingList(name: listName, icon: icons[selectIcon]))
     }
 }
+
 struct CreateListModalView_Previews: PreviewProvider {
     static var previews: some View {
         CreateListModalView()

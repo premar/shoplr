@@ -10,7 +10,7 @@ import Foundation
 final class ShoppingListService {
     
     static let sharedInstance = ShoppingListService()
-    private init(){}
+    private init() {}
     
     private let KEY: String = "1234"
     private let ENDPOINT: String = "https://shoplr.nexit.ch"
@@ -92,7 +92,6 @@ final class ShoppingListService {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                // TODO: handle error
                 print(error)
             } else if let data = data {
                 let list = try? JSONDecoder().decode(ShoppingList.self, from: data)
